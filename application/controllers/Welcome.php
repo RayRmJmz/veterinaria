@@ -24,7 +24,7 @@ class Welcome extends CI_Controller {
 		//carga el head y el navbar de pagina
 		$userlog = $this->session->userdata('usuario');
 		$fila= $this->Model->getUser($userlog);
-		$datos =array('nombre'=>$fila->nombre,'apellido1'=>$fila->apellido1,'apellido2'=>$fila->apellido2);
+		$datos =array('nombre'=>$fila->nombre,'apellido1'=>$fila->apellido1,'apellido2'=>$fila->apellido2, 'rol'=>$fila->id_rol);
 		$this->load->view("head",$datos);
 
 	}
@@ -69,6 +69,45 @@ class Welcome extends CI_Controller {
 
 		$this->load->view('footer');
 	}
+
+	/****************************** A D M I N I S T R A D O R *****************************/
+
+	function empleadosView(){
+		$this->valida_session();
+		$this->loadnav();
+		//para enviar catalogos necesarios para administrar a los empleados (roles y puestos)
+		$datos ['puestos'] = $this->Model->getPuestos();
+		$datos ['roles'] = $this->Model->getRoles();
+		$this->load->view('empleados',$datos);
+		$this->load->view('footer');
+
+	}
+
+	function serviciosView(){
+		$this->valida_session();
+		$this->loadnav();
+
+
+		$datos ['puestos'] = $this->Model->getPuestos();
+		$datos ['roles'] = $this->Model->getRoles();
+		
+
+		$this->load->view('servicios',$datos);
+		$this->load->view('footer');
+	}
+
+
+	function empleadoSearch(){
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->getEmpleados($buscar);
+
+		echo $resultados;
+
+	}
+
 
 
 }

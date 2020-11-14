@@ -89,7 +89,9 @@
               <!-- sidebar menu -->
               <ul class="nav sidebar-inner" id="sidebar-menu">
 
-
+                  <?php  
+                  if ($rol == 1) {
+                  ?>
                   <li  class="has-sub" >
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#usuarios"
                       aria-expanded="false" aria-controls="charts">
@@ -101,25 +103,54 @@
                       <div class="sub-menu">
                                              
                             <li >
-                              <a class="sidenav-item-link" href="#">
+                              <a class="sidenav-item-link" href="<?=base_url()?>welcome/empleadosView">
                                 <span class="nav-text" style="text-transform:uppercase;">Empleados</span>   
                               </a>
                             </li>
 
                             <li >
-                              <a class="sidenav-item-link" href="#">
-                                <span class="nav-text" style="text-transform:uppercase;">articulos</span>
+                              <a class="sidenav-item-link" href="<?=base_url()?>welcome/serviciosView">
+                                <span class="nav-text" style="text-transform:uppercase;">Servicios</span>
                               </a>
                             </li>
 
                             <li >
                               <a class="sidenav-item-link" href="#">
-                                <span class="nav-text" style="text-transform:uppercase;">Servicios</span>
+                                <span class="nav-text" style="text-transform:uppercase;">Articulos</span>
                               </a>
                             </li>
 
                       </div>
                     </ul>
+                  </li>
+                <?php }?>
+
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="#">
+                      <i class="mdi mdi-account"></i>
+                      <span class="nav-text">Clientes</span> 
+                    </a>
+                  </li>
+
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="#">
+                      <i class="mdi mdi-account"></i>
+                      <span class="nav-text">Reservas</span> 
+                    </a>
+                  </li>
+
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="#">
+                      <i class="mdi mdi-account"></i>
+                      <span class="nav-text">Orden de trabajo</span> 
+                    </a>
+                  </li>
+
+                  <li  class="has-sub" >
+                    <a class="sidenav-item-link" href="#">
+                      <i class="mdi mdi-account"></i>
+                      <span class="nav-text">Ventas</span> 
+                    </a>
                   </li>
 
                 
