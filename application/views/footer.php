@@ -20,7 +20,6 @@
 <script src="<?=base_url()?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?=base_url()?>assets/plugins/toaster/toastr.min.js"></script>
 <script src="<?=base_url()?>assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
-<!-- <script src="<?=base_url()?>assets/plugins/charts/Chart.min.js"></script> -->
 <script src="<?=base_url()?>assets/plugins/ladda/spin.min.js"></script>
 <script src="<?=base_url()?>assets/plugins/ladda/ladda.min.js"></script>
 <script src="<?=base_url()?>assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
@@ -35,8 +34,8 @@
 <script src="<?=base_url()?>assets/js/map.js"></script>
 <script src="<?=base_url()?>assets/js/custom.js"></script>
 
-<!-- funciones para editar y eliminar administradores y usuarios -->
-<script src="<?=base_url()?>assets/empleados.js"></script>
+
+
 
 <script>
   $(document).ready(function (){

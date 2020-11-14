@@ -1,22 +1,27 @@
-<form>
-	 <div class="form-group">
-	    <label for="exampleFormControlSelect1">Roles</label>
-	    <select class="form-control" id="2">
-	    	<?php
 
-			foreach ($puestos->result() as $row) { ?>
-	      <option><?=$row->puesto?></option>
-	  <?php } ?>
-	    </select>
-	  </div>
-</form>
-<?php
+<script src="<?=base_url()?>assets/servicios.js"></script>
+<!-- ************************************************************************* -->
+<div class="content-wrapper">
+	<div class="content">
+		<div class="card">
+		  <div class="card-header">
+          <div class="row">
+            <div class="col-sm-10">
+             <section><input type="text" name="busqueda" id="busqueda" placeholder="Buscar nombre, apellidos, puesto..." class="form-control mb-6" style="text-transform:uppercase;" ></section>
+            </div>
+            <div class="col-sm-2">
+              <a href="#" class="btn btn-primary" onclick="llamado();">Agregar servicio</a>
+            </div>
+            
+          </div>
+		  </div>
 
-foreach ($puestos->result() as $row) {
-			echo $row->puesto;
-		}
+		  <div class="card-body">
+		    <section id="resultado">
 
-foreach ($roles->result() as $row) {
-			echo $row->rol;
-		}
-?>
+		    </section>
+		  </div>
+		</div> 
+	</div>
+</div>
+<!-- ************************************************************************* -->

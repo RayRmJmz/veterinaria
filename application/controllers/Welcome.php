@@ -70,8 +70,12 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	
+
 	/****************************** A D M I N I S T R A D O R *****************************/
 
+
+	/****************************** E  M P L E A D O S *****************************/
 	function empleadosView(){
 		$this->valida_session();
 		$this->loadnav();
@@ -82,20 +86,6 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 
 	}
-
-	function serviciosView(){
-		$this->valida_session();
-		$this->loadnav();
-
-
-		$datos ['puestos'] = $this->Model->getPuestos();
-		$datos ['roles'] = $this->Model->getRoles();
-		
-
-		$this->load->view('servicios',$datos);
-		$this->load->view('footer');
-	}
-
 
 	function empleadoSearch(){
 		$buscar= "";
@@ -108,6 +98,62 @@ class Welcome extends CI_Controller {
 
 	}
 
+	function verificaUsuario(){
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->verificaUsuario($buscar);
+
+		echo $resultados;
+
+	}
+
+	function addEmpleado(){
+		date_default_timezone_set('America/Mexico_City');
+		setlocale(LC_TIME, 'es_MX.UTF-8');
+		$fecha_actual=strftime("%Y-%m-%d");
+
+		$data = array(
+			'newEmpleado' => $_POST['newEmpleado'],
+			'newPass' => $_POST['newPass'],
+			'newName' => $_POST['newName'],
+			'newApellido1' => $_POST['newApellido1'],
+			'newApellido2' => $_POST['newApellido2'],
+			'newCell' => $_POST['newCell'],
+			'newDate' => $fecha_actual=strftime("%Y-%m-%d"),
+			'newPuesto' => $_POST['newPuesto'],
+			'newRol' => $_POST['newRol']
+		);
+
+		$insert = $this->Model->addEmpleado($data);
+
+			
+	}
+
+	function fecha(){
+		date_default_timezone_set('America/Mexico_City');
+		setlocale(LC_TIME, 'es_MX.UTF-8');
+		$fecha_actual=strftime("%Y-%m-%d");
+		print_r($fecha_actual);
+		echo "<script type=\"text/javascript\">alert(\"Probando echo\");</script>";
+	}
+
+
+
+	/****************************** S E R V I C I O S *****************************/
+	function serviciosView(){
+		$this->valida_session();
+		$this->loadnav();
+
+
+		$datos ['puestos'] = $this->Model->getPuestos();
+		$datos ['roles'] = $this->Model->getRoles();
+		
+
+		$this->load->view('servicios',$datos);
+		$this->load->view('footer');
+	}
 
 
 }

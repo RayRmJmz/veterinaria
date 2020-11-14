@@ -26,7 +26,9 @@
   <!-- SLEEK CSS -->
   <link id="sleek-css" rel="stylesheet" href="<?=base_url()?>assets/css/sleek.css" />
 
-  
+  <!-- JAVASCRIPT -->
+  <script src="<?=base_url()?>assets/plugins/jquery/jquery.min.js"></script>
+  <script src="<?=base_url()?>assets/variables.js"></script>
 
   <!-- FAVICON -->
   <link href="<?=base_url()?>assets/img/favicon.png" rel="shortcut icon" />

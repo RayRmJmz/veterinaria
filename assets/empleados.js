@@ -1,9 +1,9 @@
-var url='http://localhost:82/jaimepets/welcome/';
-$(obtener_registros());
 
-function obtener_registros(cadena){
+$(obtener_empleados());
+
+function obtener_empleados(cadena){
 	$.ajax({
-		url:url+'empleadoSearch',
+		url:globalURL+'empleadoSearch',
 		type: 'POST',
 		dataType: 'html',
 		data :{cadena: cadena },
@@ -13,15 +13,51 @@ function obtener_registros(cadena){
 	})
 }
 
-$(document).on('keyup','#busqueda',function(){
+function verificaUsuario(cadena){
+	$.ajax({
+		url:globalURL+'verificaUsuario',
+		type: 'POST',
+		dataType: 'html',
+		data :{cadena: cadena },
+	})
+	.done(function(resultado){
+		if(resultado == 1){
+			document.getElementById('#Aceptar').disabled=false;
+		}else{
+			$("#message").html("usuario No disponible");
+			document.getElementById('#Aceptar').disabled=true;
+		}
+		
+	})
+}
+
+
+
+/*Verifica que el usario este disponible*/
+$(document).on('keyup','#newEmpleado',function(){
 	var valorBusqueda =$(this).val();
-	console.log("escribiendo..");
+	console.log("Verificando usuario");
 	if(valorBusqueda!=""){
-		obtener_registros(valorBusqueda);
+		verificaUsuario(valorBusqueda);
 	}else{
-		obtener_registros();
+		verificaUsuario();
 	}
 });
+
+
+/*Filtra busqueda de empelados*/
+$(document).on('keyup','#busqueda',function(){
+	var valorBusqueda =$(this).val();
+	console.log("Buscando...");
+	if(valorBusqueda!=""){
+		obtener_empleados(valorBusqueda);
+	}else{
+		obtener_empleados();
+	}
+});
+
+
+
 
 function empleados(datos){
 	console.log("editar empleado");
