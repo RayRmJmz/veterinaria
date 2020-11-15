@@ -21,13 +21,7 @@ function verificaUsuario(cadena){
 		data :{cadena: cadena },
 	})
 	.done(function(resultado){
-		if(resultado == 1){
-			document.getElementById('#Aceptar').disabled=false;
-		}else{
-			$("#message").html("usuario No disponible");
-			document.getElementById('#Aceptar').disabled=true;
-		}
-		
+		$("#message").html(resultado);
 	})
 }
 

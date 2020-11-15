@@ -107,8 +107,8 @@ class Model extends CI_Model
 
 		$query = $this->db->query("SELECT * FROM empleados WHERE usuario = '".$datos['newEmpleado']."' AND activo = 1 LIMIT 1");
 		if($query->num_rows()>0){
-			echo "<script type=\"text/javascript\">alert(\"Usuario repedito, No se puede dar de alta\");</script>";
-
+			echo "<script type=\"text/javascript\">alert(\"Usuario ya exsite, No se puede dar de alta\");</script>";
+			return FALSE;
 		}else{
 			$query = $this->db->query("INSERT INTO empleados ( usuario , contrasena, nombre, apellido1, apellido2, celular, fecha_alta, id_puesto, id_rol)
 				VALUES (
@@ -125,7 +125,7 @@ class Model extends CI_Model
 			);
 
 			echo "<script type=\"text/javascript\">alert(\"Empleado dado de alta satisfactoriamente\");</script>";
-
+			return TRUE;
 		}
 
 		
@@ -134,11 +134,12 @@ class Model extends CI_Model
 	}
 
 	function verificaUsuario($verifica){
+
 		$query = $this->db->query("SELECT * FROM empleados WHERE usuario = '".$verifica."' AND activo = 1 LIMIT 1");
 		if($query->num_rows()>0){
-			return 1;
+			echo "Usuario no disponible";
 		}else{
-			
+			echo "Usuario disponible";
 		}
 	}
 

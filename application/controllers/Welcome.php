@@ -105,7 +105,7 @@ class Welcome extends CI_Controller {
 		}
 		$resultados= $this->Model->verificaUsuario($buscar);
 
-		echo $resultados;
+		
 
 	}
 
@@ -127,7 +127,7 @@ class Welcome extends CI_Controller {
 		);
 
 		$insert = $this->Model->addEmpleado($data);
-
+		$this->empleadosView();
 			
 	}
 
