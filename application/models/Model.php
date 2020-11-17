@@ -44,34 +44,35 @@ class Model extends CI_Model
 	function getEmpleados($buscar){
 		$tabla ="";
 
-		$query = $this->db->query("SELECT empleados.id_empleado, empleados.nombre, empleados.apellido1, empleados.apellido2, empleados.celular, empleados.fecha_alta, empleados.id_puesto, puestos.puesto AS puesto, empleados.id_rol, roles.rol as rol, empleados.activo
-			FROM empleados INNER JOIN puestos on empleados.id_puesto = puestos.id_puesto INNER JOIN roles ON empleados.id_rol = roles.id_rol 
-			WHERE empleados.activo = '1'
-			ORDER BY nombre ASC");
-		
-		if(isset($buscar)){
-			$query = $this->db->query("SELECT empleados.id_empleado, empleados.nombre, empleados.apellido1, empleados.apellido2, empleados.celular, empleados.fecha_alta, empleados.id_puesto, puestos.puesto AS puesto, empleados.id_rol, roles.rol as rol, empleados.activo
+		$query = $this->db->query("SELECT  empleados.usuario,  empleados.id_empleado, empleados.nombre, empleados.apellido1, empleados.apellido2, empleados.celular, empleados.fecha_alta, empleados.id_puesto, puestos.puesto AS puesto, empleados.id_rol, roles.rol as rol, empleados.activo
 				FROM empleados INNER JOIN puestos on empleados.id_puesto = puestos.id_puesto INNER JOIN roles ON empleados.id_rol = roles.id_rol 
-				WHERE empleados.nombre LIKE '%{$buscar}%' OR empleados.apellido1 LIKE '%{$buscar}%' OR empleados.apellido2 LIKE '%{$buscar}%' OR puestos.puesto LIKE '%{$buscar}%' AND empleados.activo = 1
+				WHERE empleados.activo = 1
+				AND (empleados.nombre LIKE '%{$buscar}%' OR empleados.apellido1 LIKE '%{$buscar}%' OR empleados.apellido2 LIKE '%{$buscar}%' OR puestos.puesto LIKE '%{$buscar}%')
 				ORDER BY nombre ASC");
+
+		foreach ($query->result() as $row){
 		}
 
 		if($query->num_rows()>0){
-			$tabla.='<table class="table table-hover ">
-                          <thead>
-                            <tr style="text-transform:uppercase;">
-                              <td>Nombre</td>
-                              <td>Apellidos</td>
-                              <td>Telefono</td>
-                              <td>Rol</td>
-                              <td>Puesto</td>
-                              <td>Fecha ingreso</td>
-                              <td>Editar</td>
-                            </tr>
-                          </thead>
-                          <tbody style="text-transform:uppercase;">';
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr style="text-transform:uppercase;">
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Apellidos</th>
+                  <th scope="col">Telefono</th>
+                  <th scope="col">Rol</th>
+                  <th scope="col">Puesto</th>
+                  <th scope="col">Fecha ingreso</th>
+                  <th scope="col">Editar</th>
+                </tr>
+              </thead>
+              <tbody style="text-transform:uppercase;">';
             foreach ($query->result() as $row) {
             	$datos = "'".$row->id_empleado."||".
+            				$row->usuario."||".
             				$row->nombre."||".
                             $row->apellido1."||".
                             $row->apellido2."||".
@@ -80,6 +81,7 @@ class Model extends CI_Model
                             $row->id_puesto."||".
                             $row->id_rol."'";;
             	$tabla.=' <tr>
+            	<td>'.$row->usuario.'</td>
             	<td>'.$row->nombre.'</td>
             	<td>'.$row->apellido1.' '.$row->apellido2.'</td>
             	<td>'.$row->celular.'</td>
@@ -87,14 +89,20 @@ class Model extends CI_Model
             	<td>'.$row->rol.'</td>
             	<td>'.$row->fecha_alta.'</td>
             	<td> 
-            		<a href="#" class="fas fa-2x fa-user-edit"  data-toggle="modal" data-target="#editarEmpleado" onclick="empleados('.$datos.')" title="Editar"></a>
-            		<a href="#" class="fas fa-2x fa-user-times" style="color: red;"  data-toggle="modal" data-target="#editarEmpleado" onclick="empleados('.$datos.')" title="Editar"></a>
+            		<a href="#" class="fas fa-2x fa-user-edit"  data-toggle="modal" data-target="#editarEmpleado" onclick="empleados('.$datos.')" title="EDITAR"></a>
+            		
+            		<a href="#" class="fas fa-2x fa-user-shield"  data-toggle="modal" data-target="#cambiarPass" onclick="updatePassword('.$datos.')" title="CAMBIAR CONTRASEÑA"></a>
+
+            		<a href="#" class="fas fa-2x fa-user-times" style="color: red;"  data-toggle="modal" data-target="#bajaEmpleado" onclick="removeEmpleados('.$datos.')" title="DAR DE BAJA"></a>
 
             	</td>
             	<tr>';
             	}
             $tabla.='</tbody>
-                    </table>';
+                    </table>
+                    </div>';
+
+
 		}else{
 			$tabla="No se han encontrado resultados en la busqueda";			
 		}
@@ -103,7 +111,7 @@ class Model extends CI_Model
 		return $tabla;
 	}
 
-	function addEmpleado($datos){
+	function insertEmpleado($datos){
 
 		$query = $this->db->query("SELECT * FROM empleados WHERE usuario = '".$datos['newEmpleado']."' AND activo = 1 LIMIT 1");
 		if($query->num_rows()>0){
@@ -128,19 +136,52 @@ class Model extends CI_Model
 			return TRUE;
 		}
 
-		
+	}
 
+	function updateEmpleado($datos){
+		$query = $this->db->query(" UPDATE empleados 
+									SET nombre = '".$datos['nombre']."',
+										apellido1 = '".$datos['apellido1']."',
+									    apellido2 = '".$datos['apellido2']."',
+									    celular = '".$datos['celular']."',
+									    id_puesto = '".$datos['puesto']."',
+									    id_rol = '".$datos['rol']."'
+									WHERE id_empleado = '".$datos['id_empleado']."'");
+
+		return "OK";
+	}
+
+	function removeEmpleado($datos){
+
+		$query = $this->db->query(" UPDATE empleados SET activo = 0 WHERE id_empleado = '".$datos['id_empleado']."'");
+
+		return "OK";
+
+	}
+
+	function updatePassEmpleado($datos){
+
+		$query = $this->db->query(" UPDATE empleados SET contrasena = '".$datos['password']."' WHERE id_empleado = '".$datos['id_empleado']."'");
+
+		return "OK";
 
 	}
 
 	function verificaUsuario($verifica){
 
 		$query = $this->db->query("SELECT * FROM empleados WHERE usuario = '".$verifica."' AND activo = 1 LIMIT 1");
+
 		if($query->num_rows()>0){
 			echo "Usuario no disponible";
 		}else{
 			echo "Usuario disponible";
 		}
+	}
+
+	function probar($datos){
+		
+	
+		
 	}
 
 

@@ -64,8 +64,8 @@ class Welcome extends CI_Controller {
 	function inicio(){
 		$this->valida_session();
 		$this->loadnav();
-
-		$this->load->view('admin');
+		$datos = $this->getCatalogos();
+		$this->load->view('admin',$datos);
 
 		$this->load->view('footer');
 	}
@@ -73,86 +73,97 @@ class Welcome extends CI_Controller {
 	
 
 	/****************************** A D M I N I S T R A D O R *****************************/
-
-
-	/****************************** E  M P L E A D O S *****************************/
-	function empleadosView(){
-		$this->valida_session();
-		$this->loadnav();
-		//para enviar catalogos necesarios para administrar a los empleados (roles y puestos)
+	function getCatalogos(){
 		$datos ['puestos'] = $this->Model->getPuestos();
 		$datos ['roles'] = $this->Model->getRoles();
-		$this->load->view('empleados',$datos);
-		$this->load->view('footer');
-
+		return $datos;
 	}
 
+	/****************************** E  M P L E A D O S - V I S T A S *****************************/
+	function empleados(){
+		$this->valida_session();
+		$this->loadnav();
+		$datos = $this->getCatalogos();
+		$this->load->view('empleados',$datos);
+		$this->load->view('footer');
+	}
+
+	function agregarEmpleado(){
+		$this->valida_session();
+		$this->loadnav();
+		$datos = $this->getCatalogos();
+		$this->load->view('agregarEmpleado',$datos);
+		$this->load->view('footer');
+	}
+
+
+
+
 	function empleadoSearch(){
+		//BUSCA TODOS LOS EMPLEADOS PARA MOSTRARLOS EN  LA VISTA EMPLEADOS()
 		$buscar= "";
 		if(isset($_POST['cadena'])){
 		$buscar = $_POST['cadena'];
 		}
 		$resultados= $this->Model->getEmpleados($buscar);
-
 		echo $resultados;
-
 	}
 
 	function verificaUsuario(){
+		// BUSCA EN LA BD QUE EL USUARIO NO SE REPITA
 		$buscar= "";
 		if(isset($_POST['cadena'])){
 		$buscar = $_POST['cadena'];
 		}
-		$resultados= $this->Model->verificaUsuario($buscar);
-
-		
-
+		$resultados= $this->Model->verificaUsuario($buscar);		
 	}
 
-	function addEmpleado(){
+	function insertEmpleado(){
 		date_default_timezone_set('America/Mexico_City');
 		setlocale(LC_TIME, 'es_MX.UTF-8');
 		$fecha_actual=strftime("%Y-%m-%d");
-
 		$data = array(
-			'newEmpleado' => $_POST['newEmpleado'],
-			'newPass' => $_POST['newPass'],
-			'newName' => $_POST['newName'],
-			'newApellido1' => $_POST['newApellido1'],
-			'newApellido2' => $_POST['newApellido2'],
-			'newCell' => $_POST['newCell'],
+			'newEmpleado' => $_POST['usuario'],
+			'newPass' => $_POST['password'],
+			'newName' => $_POST['name'],
+			'newApellido1' => $_POST['apellido1'],
+			'newApellido2' => $_POST['apellido2'],
+			'newCell' => $_POST['celular'],
 			'newDate' => $fecha_actual=strftime("%Y-%m-%d"),
-			'newPuesto' => $_POST['newPuesto'],
-			'newRol' => $_POST['newRol']
+			'newPuesto' => $_POST['puesto'],
+			'newRol' => $_POST['rol']
 		);
 
-		$insert = $this->Model->addEmpleado($data);
-		$this->empleadosView();
-			
+		$insert = $this->Model->insertEmpleado($data);
+		$this->empleados();
 	}
 
-	function fecha(){
-		date_default_timezone_set('America/Mexico_City');
-		setlocale(LC_TIME, 'es_MX.UTF-8');
-		$fecha_actual=strftime("%Y-%m-%d");
-		print_r($fecha_actual);
-		echo "<script type=\"text/javascript\">alert(\"Probando echo\");</script>";
+	function updateEmpleado(){
+		$result = $this->Model->updateEmpleado($_POST);
+		echo $result;
 	}
 
+	function updatePassEmpleado(){
+		$result = $this->Model->updatePassEmpleado($_POST);
+		echo $result;
+	}
+
+	function removeEmpleado(){
+		$result = $this->Model->removeEmpleado($_POST);
+		echo $result;
+	}
+
+
+
+	
 
 
 	/****************************** S E R V I C I O S *****************************/
-	function serviciosView(){
-		$this->valida_session();
-		$this->loadnav();
+	
+	function test(){
+		$result = $this->Model->probar($_POST);
 
-
-		$datos ['puestos'] = $this->Model->getPuestos();
-		$datos ['roles'] = $this->Model->getRoles();
-		
-
-		$this->load->view('servicios',$datos);
-		$this->load->view('footer');
+		echo $result;
 	}
 
 

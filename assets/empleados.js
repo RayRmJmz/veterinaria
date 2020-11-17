@@ -2,6 +2,7 @@
 $(obtener_empleados());
 
 function obtener_empleados(cadena){
+
 	$.ajax({
 		url:globalURL+'empleadoSearch',
 		type: 'POST',
@@ -12,32 +13,6 @@ function obtener_empleados(cadena){
 		$("#resultado").html(resultado);	
 	})
 }
-
-function verificaUsuario(cadena){
-	$.ajax({
-		url:globalURL+'verificaUsuario',
-		type: 'POST',
-		dataType: 'html',
-		data :{cadena: cadena },
-	})
-	.done(function(resultado){
-		$("#message").html(resultado);
-	})
-}
-
-
-
-/*Verifica que el usario este disponible*/
-$(document).on('keyup','#newEmpleado',function(){
-	var valorBusqueda =$(this).val();
-	console.log("Verificando usuario");
-	if(valorBusqueda!=""){
-		verificaUsuario(valorBusqueda);
-	}else{
-		verificaUsuario();
-	}
-});
-
 
 /*Filtra busqueda de empelados*/
 $(document).on('keyup','#busqueda',function(){
@@ -51,20 +26,250 @@ $(document).on('keyup','#busqueda',function(){
 });
 
 
+function verificaUsuario(cadena){
+	$.ajax({
+		url:globalURL+'verificaUsuario',
+		type: 'POST',
+		dataType: 'html',
+		data :{cadena: cadena },
+	})
+	.done(function(resultado){
+		$("#message").html(resultado);
+	})
+}
+
+/*Verifica que el usario este disponible*/
+$(document).on('keyup','#usuario',function(){
+	var valorBusqueda =$(this).val();
+	//console.log("Verificando usuario");
+	if(valorBusqueda!=""){
+		verificaUsuario(valorBusqueda);
+	}else{
+		verificaUsuario();
+	}
+});
+
+
 
 
 function empleados(datos){
-	console.log("editar empleado");
-
+	//console.log("editar empleado");
 	d=datos.split('||');
 	$('#id_empleado').val(d[0]);
-	$('#nombre').val(d[1]);
-	$('#apellido1').val(d[2]);	
-	$('#apeliido2').val(d[3]);
-	$('#celular').val(d[4]);
-	$('#fecha_alta').val(d[5]);
-	$('#id_puesto').val(d[6]);
-	$('#id_rol').val(d[7]);
-
+	$('#usuario').val(d[1]);
+	$('#nombre').val(d[2]);
+	$('#apellido1').val(d[3]);	
+	$('#apellido2').val(d[4]);
+	$('#celular').val(d[5]);
+	$('#fecha_alta').val(d[6]);
+	$('#id_puesto').val(d[7]);
+	$('#id_rol').val(d[8]);
 }
 
+function updatePassword(datos){
+	d=datos.split('||');
+	$('#update_id_empleado').val(d[0]);
+	$('#update_usuario').val(d[1]);
+}
+
+function removeEmpleados(datos){
+	//console.log("editar empleado");
+	d=datos.split('||');
+	$('#remove_id_empleado').val(d[0]);
+	$('#remove_usuario').val(d[1]);
+	$('#remove_nombre').val(d[2]);
+	$('#remove_apellido1').val(d[3]);	
+	$('#remove_apeliido2').val(d[4]);
+	$('#remove_celular').val(d[5]);
+	$('#remove_fecha_alta').val(d[6]);
+	$('#remove_id_puesto').val(d[7]);
+	$('#remove_id_rol').val(d[8]);
+}
+
+
+
+function validateForm(){
+	var elemento = document.getElementById("message").textContent;
+	if(elemento== "Usuario no disponible"){
+		alert("USUARIO YA EXISTE, INGRESE OTRO USUARIO");
+		return false;
+	}
+	
+    if (document.forms["empleadosForm"]["usuario"].value == "") {
+    alert("INGRESE USUARIO");
+    return false;
+    }
+   
+    if (document.forms["empleadosForm"]["password"].value == "") {
+    alert("INGRESE CONTRASEÑA");
+    return false;
+    }
+
+    if (document.forms["empleadosForm"]["password2"].value == "") {
+    alert("INGRESE CONTRASEÑA PARA VERIFICAR");
+    return false;
+    }
+    if (document.forms["empleadosForm"]["password2"].value != document.forms["empleadosForm"]["password"].value) {
+    alert("CONTRASEÑAS NO COINCIDEN");
+    return false;
+    }
+
+    if (document.forms["empleadosForm"]["name"].value == "") {
+    alert("INGRESE NOMBRE");
+    return false;
+    }
+
+    if (document.forms["empleadosForm"]["apellido1"].value == "") {
+    alert("INGRESE PRIMER APELLIDO");
+    return false;
+    }
+
+    if (document.forms["empleadosForm"]["apellido2"].value == "") {
+    alert("INGRESE SEGUNDO APELLIDO");
+    return false;
+    }
+
+    if (document.forms["empleadosForm"]["celular"].value == "") {
+    alert("INGRESE NUMERO CELULAR");
+    return false;
+    }
+
+    if (document.forms["empleadosForm"]["rol"].value == "") {
+    alert("SELECCIONE ROL");
+    return false;
+    }
+
+    if (document.forms["empleadosForm"]["puesto"].value == "") {
+    alert("SELECCIONE PUESTO");
+    return false;
+    }
+ 
+}
+
+// Valida contraseña sea iguales
+$(document).on('keyup','#password2',function(){
+	var pass1 = document.forms["empleadosForm"]["password"].value;
+	var pass2 = document.forms["empleadosForm"]["password2"].value;
+	if(pass2 != ""){
+		if(pass1 == pass2){
+		$("#confirm").html("");
+		}else{
+			$("#confirm").html("contraseña no coincide");
+			return false;
+		}
+	}
+	
+});
+
+$(document).on('keyup','#password',function(){
+	var pass1 = document.forms["empleadosForm"]["password"].value;
+	var pass2 = document.forms["empleadosForm"]["password2"].value;
+	$("#confirm").html("");
+	if(pass2 != ""){
+		if(pass1 == pass2){
+		$("#confirm").html("");
+		}else{
+			$("#confirm").html("contraseña no coincide");
+			return false;
+		}
+	}
+});
+
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+
+/************************************************************************/
+
+
+function updateEmpleado(){
+	var empleado = {
+		id_empleado : document.getElementById('id_empleado').value,
+		nombre : document.getElementById('nombre').value,
+		apellido1 : document.getElementById('apellido1').value,
+		apellido2 : document.getElementById('apellido2').value,
+		celular : document.getElementById('celular').value,
+		puesto : document.getElementById('puesto').value,
+		rol : document.getElementById('rol').value
+	}
+
+	$.ajax({
+		url:globalURL+'updateEmpleado',
+		method:'POST',
+		data :empleado,
+		//dataType: 'json',
+		success:function(res){
+			// $("#resultado").html(res);
+			console.log(res);
+			window.alert("DATOS USUARIO ACTUALIZADO");
+			obtener_empleados();
+		},
+		error:function(error){
+			console.error(error);
+			console.alert("EMPLEADO NO SE PUDO ACTUALIZAAR");
+		}
+	});
+}
+
+function updatePassEmpleado(){
+	var empleado = {
+		id_empleado : document.getElementById('update_id_empleado').value,
+		password 	: document.getElementById('password').value
+	}
+
+	$.ajax({
+		url:globalURL+'updatePassEmpleado',
+		method:'POST',
+		data :empleado,
+		//dataType: 'json',
+		success:function(res){
+			// $("#resultado").html(res);
+			console.log(res);
+			window.alert("CONTRASEÑA ACTUALIZADA SATISFATORIAMENTE");
+			obtener_empleados();
+		},
+		error:function(error){
+			console.error(error);
+			console.alert("NO SE HA PODIDO ACTUALIZAR CONTRASEÑA");
+		}
+	});
+}
+
+function removeEmpleado(){
+	var empleado = {
+		id_empleado : document.getElementById('remove_id_empleado').value
+	}
+
+	$.ajax({
+		url:globalURL+'removeEmpleado',
+		method:'POST',
+		data :empleado,
+		//dataType: 'json',
+		success:function(res){
+			// $("#resultado").html(res);
+			console.log(res);
+			window.alert("EMPLEADO DADO DE BAJA SATISFATORIAMENTE");
+			obtener_empleados();
+		},
+		error:function(error){
+			console.error(error);
+			console.alert("EMPLEADO NO SE PUDO DAR DE BAJA");
+		}
+	});
+}
