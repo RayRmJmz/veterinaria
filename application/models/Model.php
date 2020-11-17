@@ -66,7 +66,7 @@ class Model extends CI_Model
                   <th scope="col">Rol</th>
                   <th scope="col">Puesto</th>
                   <th scope="col">Fecha ingreso</th>
-                  <th scope="col">Editar</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody style="text-transform:uppercase;">';
@@ -90,9 +90,13 @@ class Model extends CI_Model
             	<td>'.$row->fecha_alta.'</td>
             	<td> 
             		<a href="#" class="fas fa-2x fa-user-edit"  data-toggle="modal" data-target="#editarEmpleado" onclick="empleados('.$datos.')" title="EDITAR"></a>
-            		
+
+            		&nbsp;&nbsp;
+
             		<a href="#" class="fas fa-2x fa-user-shield"  data-toggle="modal" data-target="#cambiarPass" onclick="updatePassword('.$datos.')" title="CAMBIAR CONTRASEÑA"></a>
 
+            		&nbsp;&nbsp;
+            		
             		<a href="#" class="fas fa-2x fa-user-times" style="color: red;"  data-toggle="modal" data-target="#bajaEmpleado" onclick="removeEmpleados('.$datos.')" title="DAR DE BAJA"></a>
 
             	</td>
@@ -113,22 +117,25 @@ class Model extends CI_Model
 
 	function insertEmpleado($datos){
 
-		$query = $this->db->query("SELECT * FROM empleados WHERE usuario = '".$datos['newEmpleado']."' AND activo = 1 LIMIT 1");
+		$query = $this->db->query("SELECT * FROM empleados WHERE usuario = '".$datos['usuario']."' AND activo = 1 LIMIT 1");
 		if($query->num_rows()>0){
 			echo "<script type=\"text/javascript\">alert(\"Usuario ya exsite, No se puede dar de alta\");</script>";
 			return FALSE;
 		}else{
+			date_default_timezone_set('America/Mexico_City');
+			setlocale(LC_TIME, 'es_MX.UTF-8');
+			$fecha_actual=strftime("%Y-%m-%d");
 			$query = $this->db->query("INSERT INTO empleados ( usuario , contrasena, nombre, apellido1, apellido2, celular, fecha_alta, id_puesto, id_rol)
 				VALUES (
-					'".$datos['newEmpleado']."',
-					'".$datos['newPass']."',
-					'".$datos['newName']."',
-					'".$datos['newApellido1']."',
-					'".$datos['newApellido2']."',
-					'".$datos['newCell']."',
-					'".$datos['newDate']."',
-					'".$datos['newPuesto']."',
-					'".$datos['newRol']."'
+					'".$datos['usuario']."',
+					'".$datos['password']."',
+					'".$datos['name']."',
+					'".$datos['apellido1']."',
+					'".$datos['apellido2']."',
+					'".$datos['celular']."',
+					'".$fecha_actual."',
+					'".$datos['puesto']."',
+					'".$datos['rol']."'
 				)"
 			);
 
@@ -177,13 +184,63 @@ class Model extends CI_Model
 			echo "Usuario disponible";
 		}
 	}
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	function getServicios($buscar){
+		$tabla ="";
 
-	function probar($datos){
-		
-	
-		
+		$query = $this->db->query("SELECT  * FROM servicios WHERE cancelada = 0
+				AND (servicios.servicio LIKE '%{$buscar}%')
+				ORDER BY servicio ASC");
+
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr style="text-transform:uppercase;">
+                  <th scope="col">Servicio</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Duracion</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody style="text-transform:uppercase;">';
+            foreach ($query->result() as $row) {
+            	$datos = "'".$row->id_servicio."||".
+            				$row->servicio."||".
+            				$row->precio."||".
+            				$row->duracion."||".
+                            $row->descripcion."'";
+            	$tabla.=' <tr>
+            	<td>'.$row->servicio.'</td>
+            	<td>'.$row->precio.'</td>
+            	<td>'.$row->duracion.'</td>
+            	<td>'.$row->descripcion.'</td>
+            	<td> 
+            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarServicio" onclick="servicios('.$datos.')" title="EDITAR"></a>
+
+            		&nbsp;&nbsp;&nbsp;&nbsp;
+
+            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaServicio" onclick="removeServicios('.$datos.')" title="DAR DE BAJA"></a>
+
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+
+		}else{
+			$tabla=' <p style="text-transform:uppercase;">NO SE HA ENCONTRADO RESULTADO EN LA BUSQUEDA ' .$buscar. '</p>' ;			
+		}
+
+
+		return $tabla;
 	}
-
-
-	
 }

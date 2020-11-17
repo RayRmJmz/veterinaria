@@ -12,8 +12,7 @@
              <section><input type="text" name="busqueda" id="busqueda" placeholder="Buscar nombre, apellidos, puesto..." class="form-control mb-6" style="text-transform:uppercase;" ></section>
             </div>
             <div class="col-sm-2">
-              <a href="<?=base_url()?>welcome/agregarEmpleado" class="btn btn-primary">Agregar empleado</a>
-             <!--  <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addEmpleado">Agregar empleado</a> -->
+              <a href="<?=base_url()?>welcome/agregarEmpleado" class="btn btn-primary">AGREGAR EMPLEADO</a>
             </div>
             
           </div>

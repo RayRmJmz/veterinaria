@@ -1,8 +1,7 @@
-
+/****MOSTRA DATOS AL CARGAR LA VISTA*/
 $(obtener_empleados());
 
 function obtener_empleados(cadena){
-
 	$.ajax({
 		url:globalURL+'empleadoSearch',
 		type: 'POST',
@@ -25,7 +24,7 @@ $(document).on('keyup','#busqueda',function(){
 	}
 });
 
-
+/************************************************/
 function verificaUsuario(cadena){
 	$.ajax({
 		url:globalURL+'verificaUsuario',

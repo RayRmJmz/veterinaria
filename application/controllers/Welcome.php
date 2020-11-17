@@ -97,7 +97,7 @@ class Welcome extends CI_Controller {
 	}
 
 
-
+	/****************************** E  M P L E A D O S - C R U D *****************************/
 
 	function empleadoSearch(){
 		//BUSCA TODOS LOS EMPLEADOS PARA MOSTRARLOS EN  LA VISTA EMPLEADOS()
@@ -119,22 +119,7 @@ class Welcome extends CI_Controller {
 	}
 
 	function insertEmpleado(){
-		date_default_timezone_set('America/Mexico_City');
-		setlocale(LC_TIME, 'es_MX.UTF-8');
-		$fecha_actual=strftime("%Y-%m-%d");
-		$data = array(
-			'newEmpleado' => $_POST['usuario'],
-			'newPass' => $_POST['password'],
-			'newName' => $_POST['name'],
-			'newApellido1' => $_POST['apellido1'],
-			'newApellido2' => $_POST['apellido2'],
-			'newCell' => $_POST['celular'],
-			'newDate' => $fecha_actual=strftime("%Y-%m-%d"),
-			'newPuesto' => $_POST['puesto'],
-			'newRol' => $_POST['rol']
-		);
-
-		$insert = $this->Model->insertEmpleado($data);
+		$insert = $this->Model->insertEmpleado($_POST);
 		$this->empleados();
 	}
 
@@ -153,18 +138,46 @@ class Welcome extends CI_Controller {
 		echo $result;
 	}
 
-
-
+	/****************************** S E R V I C I O S  - V I S T A S*****************************/
 	
+	function servicios(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('servicios');
+		$this->load->view('footer');
+	}
 
+	function agregarServicio(){
 
-	/****************************** S E R V I C I O S *****************************/
-	
-	function test(){
-		$result = $this->Model->probar($_POST);
+	}
+	/****************************** S E R V I C I O S - C R U D *****************************/
 
+	function serviciosSearch(){
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->getServicios($buscar);
+		echo $resultados;
+	}
+
+	function checkServicio(){
+
+	}
+
+	function insertServicio(){
+		$insert = $this->Model->insertServicio($_POST);
+		$this->empleados();
+	}
+
+	function updateServicio(){
+		$result = $this->Model->updateServicio($_POST);
 		echo $result;
 	}
 
+	function removeServicio(){
+		$result = $this->Model->removeServicio($_POST);
+		echo $result;
+	}
 
 }
