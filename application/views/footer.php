@@ -1,5 +1,5 @@
-          <footer class="footer mt-auto">
-            <div class="copyright bg-white">
+          <footer class="footer mt-auto" style="display: flex; justify-content: center;">
+            <!-- <div class="copyright bg-white">
               <p style="text-transform:uppercase;">
                 &copy; <span id="copy-year">2020</span> Copyright (beta).
               </p>
@@ -8,13 +8,13 @@
                 var d = new Date();
                 var year = d.getFullYear();
                 document.getElementById("copy-year").innerHTML = year;
-            </script>
+            </script> -->
           </footer>
 
       </div> <!-- FINAL CLASS-WRAPPER EN FOOTER-->
     </div><!-- FINAL  WRAPPER EN FOOTER-->
 
-    
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM" defer></script>
 <script src="<?=base_url()?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?=base_url()?>assets/plugins/toaster/toastr.min.js"></script>
@@ -39,7 +39,7 @@
 <script>
   $(document).ready(function (){
     $('[data-toggle="tooltip"]').tooltip();
-  });     
+  });
 </script>
 
 

@@ -1,0 +1,43 @@
+/* Main NAVBAR */
+
+.main-nav {
+  background-color: #025CAB !important;
+}
+
+.nav-arrow_down {
+  color: #fff;
+}
+
+.username-text {
+  color: #fff;
+}
+
+/* Secondary NAVBAR*/
+
+.second-nav {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.second-nav_box {
+  justify-content: space-between;
+}
+
+.img_logo{
+  display: none;
+
+}
+
+
+@media (min-width: 992px){
+  .img_logo {
+    display: flex;
+    height: 80px;
+    margin-left: 40px
+  }
+}
+
+.user {
+  height: 30px;
+  margin-right: 0.5rem;
+}
+
