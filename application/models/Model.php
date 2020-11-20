@@ -239,8 +239,7 @@ class Model extends CI_Model
 		}else{
 			$tabla=' <p style="text-transform:uppercase;">NO SE HA ENCONTRADO RESULTADO EN LA BUSQUEDA ' .$buscar. '</p>' ;			
 		}
-
-
+		
 		return $tabla;
 	}
 }
