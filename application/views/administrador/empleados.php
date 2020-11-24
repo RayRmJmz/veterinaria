@@ -9,7 +9,7 @@
 		  <div class="card-header">
           <div class="row">
             <div class="col-sm-10">
-             <section><input type="text" name="busqueda" id="busqueda" placeholder="Buscar nombre, apellidos, puesto..." class="form-control mb-6" style="text-transform:uppercase;" ></section>
+             <section><input type="text" name="busqueda" id="busqueda" placeholder="Buscar nombre, apellido, puesto..." class="form-control mb-6" style="text-transform:uppercase;" ></section>
             </div>
             <div class="col-sm-2">
               <a href="<?=base_url()?>welcome/agregarEmpleado" class="btn btn-primary">AGREGAR EMPLEADO</a>

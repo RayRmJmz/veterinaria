@@ -26,7 +26,7 @@
       </div>
       <button class="btn btn-lg btn-primary btn-block btn__login" type="submit">Iniciar Sesión</button>
     </form>
-    <script src="<?=base_url()?>assets/plugins/jquery/jquery.slim.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="<?=base_url()?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
