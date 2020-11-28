@@ -41,14 +41,14 @@
       NProgress.start();
     </script>
     <div class="mobile-sticky-body-overlay"></div>
-    <header>
+    <header style="text-transform:uppercase;" >
       <nav class="navbar navbar-expand-lg navbar-light navbar-dark main-nav">
         <ul class="navbar-nav mr-auto"></ul>
         <ul navbar-nav>
-          <li class="dropdown user-menu">
+          <li class="dropdown user-menu" >
             <button href="#" class="dropdown-toggle nav-link nav-arrow_down" data-toggle="dropdown">
               <img src="<?=base_url()?>assets/img/user/user1.png" class="user-image user" alt="User Image" />
-              <span class="d-none d-lg-inline-block username"> <?=$nombre?> <?=$apellido1?></span>
+              <span class="d-none d-lg-inline-block username" style="text-transform:uppercase;" > <?=$nombre?> <?=$apellido1?></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right">
               <li class="dropdown">

@@ -40,7 +40,11 @@ class Model extends CI_Model
 	}
 
 
-	///////////// EMPLEADOS //////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/*************** E M P L E A D O S ******************************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
 
 	function getEmpleados($buscar){
 		$tabla ="";
@@ -196,13 +200,13 @@ class Model extends CI_Model
 	}
 	/****************************************************************************************************/
 	/****************************************************************************************************/
-	/****************************************************************************************************/
+	/*************** S E R V I C I O S  *****************************************************************/
 	/****************************************************************************************************/
 	/****************************************************************************************************/
 	function getServicios($buscar){
 		$tabla ="";
 
-		$query = $this->db->query("SELECT  * FROM servicios WHERE cancelada = 0
+		$query = $this->db->query("SELECT  * FROM servicios WHERE activo = 1
 				AND (servicios.servicio LIKE '%{$buscar}%')
 				ORDER BY servicio ASC");
 
@@ -213,8 +217,6 @@ class Model extends CI_Model
               <thead>
                 <tr style="text-transform:uppercase;">
                   <th scope="col">Servicio</th>
-                  <th scope="col">Precio</th>
-                  <th scope="col">Duracion</th>
                   <th scope="col">Descripcion</th>
                   <th scope="col">Acciones</th>
                 </tr>
@@ -223,13 +225,9 @@ class Model extends CI_Model
             foreach ($query->result() as $row) {
             	$datos = "'".$row->id_servicio."||".
             				$row->servicio."||".
-            				$row->precio."||".
-            				$row->duracion."||".
                             $row->descripcion."'";
             	$tabla.=' <tr>
             	<td>'.$row->servicio.'</td>
-            	<td>'.$row->precio.'</td>
-            	<td>'.$row->duracion.'</td>
             	<td>'.$row->descripcion.'</td>
             	<td>
             		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarServicio" onclick="servicios('.$datos.')" title="EDITAR"></a>
@@ -250,7 +248,140 @@ class Model extends CI_Model
 			$tabla=' <p style="text-transform:uppercase;">NO SE HA ENCONTRADO RESULTADO EN LA BUSQUEDA ' .$buscar. '</p>' ;
 		}
 
+		return $tabla;
+	}
+
+	function checkServicio($verifica){
+
+		$query = $this->db->query("SELECT * FROM servicios WHERE servicio = '".$verifica."' AND activo = 1 LIMIT 1");
+
+		if($query->num_rows()>0){
+			echo "SE HA ENCONTRADO UN SERVICIO PARECIDO";
+		}else{
+			echo "SERVICIO DISPONIBLE";
+		}
+	}
+
+	function insertServicio($datos){
+		$query = $this->db->query("INSERT INTO servicios (servicio, descripcion)
+			VALUES (
+				'".$datos['servicio']."',
+				'".$datos['descripcion']."'
+			)");
+
+		echo "<script type=\"text/javascript\">alert(\"SERVICIO DADO DE ALTA SATISFACTORIAMENTE\");</script>";
+	}
+
+	function updateServicio($datos){
+		$query = $this->db->query(" UPDATE servicios SET
+									servicio = '".$datos['servicio']."',
+									descripcion = '".$datos['descripcion']."'
+								 WHERE id_servicio = '".$datos['id_servicio']."'");
+
+		return "OK";
+	}
+
+	function removeServicio($datos){
+		$query = $this->db->query("UPDATE servicios SET activo = 0 WHERE id_servicio = '".$datos['id_servicio']."'");
+		return "OK";
+	}
+
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/*************** A R T I C U L O S  *****************************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+
+	function getArticulos($buscar){
+		$tabla ="";
+
+		$query = $this->db->query("SELECT  * FROM articulos WHERE activo = 1
+				AND (articulos.articulo LIKE '%{$buscar}%' )
+				ORDER BY articulo ASC");
+
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr style="text-transform:uppercase;">
+                  <th scope="col">ARTICULO</th>
+                  <th scope="col">MARCA</th>
+                  <th scope="col">PRECIO</th>
+                  <th scope="col">EXISTENCIA</th>
+                  <th scope="col">ACCIONES</th>
+                </tr>
+              </thead>
+              <tbody style="text-transform:uppercase;">';
+            foreach ($query->result() as $row) {
+            	$datos = "'".$row->id_articulo."||".
+            				$row->articulo."||".
+            				$row->marca."||".
+            				$row->precio."||".
+                            $row->existencia."'";
+            	$tabla.=' <tr>
+            	<td>'.$row->articulo.'</td>
+            	<td>'.$row->marca.'</td>
+            	<td>'.$row->precio.'</td>
+            	<td>'.$row->existencia.'</td>
+            	<td>
+            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarArticulo" onclick="articulos('.$datos.')" title="EDITAR"></a>
+
+            		&nbsp;&nbsp;&nbsp;&nbsp;
+
+            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaArticulo" onclick="removeArticulos('.$datos.')" title="DAR DE BAJA"></a>
+
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+
+		}else{
+			$tabla=' <p style="text-transform:uppercase;">NO SE HA ENCONTRADO RESULTADO EN LA BUSQUEDA ' .$buscar. '</p>' ;
+		}
 
 		return $tabla;
+	}
+
+	function checkArticulo($verifica){
+
+		$query = $this->db->query("SELECT * FROM articulos WHERE articulo = '".$verifica."' AND activo = 1 LIMIT 1");
+
+		if($query->num_rows()>0){
+			echo "SE HA ENCONTRADO UN ARTICULO PARECIDO";
+		}else{
+			echo "";
+		}
+	}
+
+	function insertArticulo($datos){
+		$query = $this->db->query("INSERT INTO articulos (articulo, marca, precio, existencia)
+			VALUES (
+				'".$datos['articulo']."',
+				'".$datos['marca']."',
+				'".$datos['precio']."',
+				'".$datos['existencia']."'
+			)");
+
+		echo "<script type=\"text/javascript\">alert(\"ARTICULO DADO DE ALTA SATISFACTORIAMENTE\");</script>";
+	}
+
+	function updateArticulo($datos){
+		$query = $this->db->query(" UPDATE articulos SET
+									articulo = '".$datos['articulo']."',
+									marca = '".$datos['marca']."',
+									precio = '".$datos['precio']."',
+									existencia = '".$datos['existencia']."'
+								 WHERE id_articulo = '".$datos['id_articulo']."'");
+
+		return "OK";
+	}
+
+	function removeArticulo($datos){
+		$query = $this->db->query("UPDATE articulos SET activo = 0 WHERE id_articulo = '".$datos['id_articulo']."'");
+		return "OK";
 	}
 }

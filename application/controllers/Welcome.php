@@ -65,7 +65,7 @@ class Welcome extends CI_Controller {
 		$this->valida_session();
 		$this->loadnav();
 		$datos = $this->getCatalogos();
-		$this->load->view('admin',$datos);
+		$this->load->view('administrador/admin',$datos);
 
 		$this->load->view('footer');
 	}
@@ -84,7 +84,7 @@ class Welcome extends CI_Controller {
 		$this->valida_session();
 		$this->loadnav();
 		$datos = $this->getCatalogos();
-		$this->load->view('empleados',$datos);
+		$this->load->view('administrador/empleados',$datos);
 		$this->load->view('footer');
 	}
 
@@ -92,7 +92,7 @@ class Welcome extends CI_Controller {
 		$this->valida_session();
 		$this->loadnav();
 		$datos = $this->getCatalogos();
-		$this->load->view('agregarEmpleado',$datos);
+		$this->load->view('administrador/agregarEmpleado',$datos);
 		$this->load->view('footer');
 	}
 
@@ -143,11 +143,15 @@ class Welcome extends CI_Controller {
 	function servicios(){
 		$this->valida_session();
 		$this->loadnav();
-		$this->load->view('servicios');
+		$this->load->view('administrador/servicios');
 		$this->load->view('footer');
 	}
 
 	function agregarServicio(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('administrador/agregarServicio');
+		$this->load->view('footer');
 
 	}
 	/****************************** S E R V I C I O S - C R U D *****************************/
@@ -162,12 +166,16 @@ class Welcome extends CI_Controller {
 	}
 
 	function checkServicio(){
-
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->checkServicio($buscar);
 	}
 
 	function insertServicio(){
 		$insert = $this->Model->insertServicio($_POST);
-		$this->empleados();
+		$this->servicios();
 	}
 
 	function updateServicio(){
@@ -179,5 +187,55 @@ class Welcome extends CI_Controller {
 		$result = $this->Model->removeServicio($_POST);
 		echo $result;
 	}
+
+	/****************************** A R T I C U L O S  - V I S T A S*****************************/
+	
+	function articulos(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('administrador/articulos');
+		$this->load->view('footer');
+	}
+
+	function agregarArticulo(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('administrador/agregarArticulo');
+		$this->load->view('footer');
+
+	}
+	/****************************** A R T I C U L O S - C R U D *****************************/
+	function articulosSearch(){
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->getArticulos($buscar);
+		echo $resultados;
+	}
+
+	function checkArticulo(){
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->checkArticulo($buscar);
+	}
+
+	function insertArticulo(){
+		$insert = $this->Model->insertArticulo($_POST);
+		$this->articulos();
+	}
+
+	function updateArticulo(){
+		$result = $this->Model->updateArticulo($_POST);
+		echo $result;
+	}
+
+	function removeArticulo(){
+		$result = $this->Model->removeArticulo($_POST);
+		echo $result;
+	}
+
 
 }

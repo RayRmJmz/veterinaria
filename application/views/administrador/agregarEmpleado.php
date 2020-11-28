@@ -18,7 +18,7 @@
 
 				    <div class="form-group col-md-4">
 				      <label for="usuario">USUARIO</label>
-				      <input type="text" class="form-control" id="usuario" name="usuario" required="" title="SE RECOMIENDA USAR PRIMERA LETRA NOMBRE + PRIMER APELLIDO">
+				      <input type="text" class="form-control" id="usuario" name="usuario" required="" title="SE RECOMIENDA USAR PRIMERA LETRA NOMBRE + PRIMER APELLIDO" style="text-transform:uppercase" >
 				      <p id="message"></p>
 				    </div>
 
@@ -37,17 +37,17 @@
 
 			    <div class="form-group">
 			      <label for="name">NOMBRE</label>
-			      <input type="text" class="form-control" id="name" name="name" required="">
+			      <input type="text" class="form-control" id="name" name="name" required="" style="text-transform:uppercase" >
 			    </div>
 
 			    <div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label for="apellido1">PRIMER APELLIDO</label>
-				      <input type="text" class="form-control" id="apellido1" name="apellido1" required="">
+				      <input type="text" class="form-control" id="apellido1" name="apellido1" required="" style="text-transform:uppercase" >
 				    </div>
 				    <div class="form-group col-md-6">
 				      <label for="apellido2">SEGUNDO APELLIDO</label>
-				      <input type="text" class="form-control" id="apellido2" name="apellido2" required="">
+				      <input type="text" class="form-control" id="apellido2" name="apellido2" required="" style="text-transform:uppercase" >
 				    </div>
 			    </div>
 			    <div class="form-row">
@@ -80,15 +80,6 @@
 			    <a href="<?=base_url()?>welcome/empleados" type="button" class="btn btn-danger mb-2">Cancelar</a>
 
 		  	</form>
-
-		  	
-
-			    
-
-
-		    
-
-		    
 
 		  </div>
 		</div> 
