@@ -21,9 +21,10 @@
     <link href="<?=base_url()?>assets/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<?=base_url()?>assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?=base_url()?>assets/css/head.css">
+    <link rel="stylesheet" href="<?=base_url()?>assets/css/empleados.css">
 
     <!-- FAVICON -->
-    <link href="<?=base_url()?>assets/img/favicon.png" rel="shortcut icon"/>
+    <link href="<?=base_url()?>assets/img/logo-fav.png" rel="shortcut icon"/>
 
     <!-- SLEEK CSS -->
     <link id="sleek-css" rel="stylesheet" href="<?=base_url()?>assets/css/sleek.css" />
@@ -58,7 +59,7 @@
         </ul>
       </nav>
       <nav class="navbar navbar-expand-lg navbar-light second-nav">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler menu_icon" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse second-nav_box" id="navbarNavDropdown">

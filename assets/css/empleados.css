@@ -1,0 +1,80 @@
+/* empleados.php */
+.wrapper {
+  margin: 0 auto;
+  max-width: 1880px;
+}
+
+.card-container {
+  border-radius: 10px;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  max-height: 665px;
+  min-width: 375px;
+}
+
+.card-search {
+  background-color: #fff;
+  border: none;
+  margin: 25px 15px 15px;
+}
+
+.container-search {
+  flex-wrap: nowrap;
+}
+
+.search {
+  display: flex;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+}
+
+.btn-add_empleado {
+  margin-left: 22.5px;
+}
+
+/* Model.php */
+
+.tabla {
+  color: #6c757d;
+}
+
+.first-column td:first-child {
+  font-weight: unset;
+  color: #6c757d;
+}
+
+.titles-thead {
+  color: #6c757d;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: #f1f3fa;
+}
+
+.titles-thead:last-child {
+  text-align: center;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f7f9fc;
+  color: #545657;
+  font-weight: 500;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.icon-action {
+  fill: #98a6ad;
+}
+
+.icon-action:hover {
+  fill: #545657;
+}
+
+.icon-editar {
+  height: 35px;
+}
