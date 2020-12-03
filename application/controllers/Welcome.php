@@ -237,5 +237,60 @@ class Welcome extends CI_Controller {
 		echo $result;
 	}
 
+	/****************************** C L I E N T E S  - V I S T A S*****************************/
+	
+	function clientes(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('clientes');
+		$this->load->view('footer');
+	}
 
+	function agregarCliente(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('agregarCliente');
+		$this->load->view('footer');
+
+	}
+
+	/****************************** C L I E N T E S - C R U D *****************************/
+
+	function clienteSearch(){
+		//BUSCA TODOS LOS EMPLEADOS PARA MOSTRARLOS EN  LA VISTA EMPLEADOS()
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->getClientes($buscar);
+		echo $resultados;
+	}
+
+	function verificaCliente(){
+		// BUSCA EN LA BD QUE EL USUARIO NO SE REPITA
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$resultados= $this->Model->verificaCliente($buscar);		
+	}
+
+	function insertCliente(){
+		$insert = $this->Model->insertCliente($_POST);
+		$this->clientes();
+	}
+
+	function updateCliente(){
+		$result = $this->Model->updateCliente($_POST);
+		echo $result;
+	}
+
+	function removeCliente(){
+		$result = $this->Model->removeCliente($_POST);
+		echo $result;
+	}
+	 function test(){
+	 	$query = $this->db->query("SELECT COUNT(id_mascota) AS mascotas FROM mascotas WHERE id_cliente = 1");
+	 	print_r($query->row('mascotas'));
+	 }
 }

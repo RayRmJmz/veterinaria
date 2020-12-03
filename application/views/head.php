@@ -78,7 +78,7 @@
               </li>
             <?php }?>
             <li class="nav-item">
-              <a class="nav-link" href="#">Clientes</span></a>
+              <a class="nav-link" href="<?=base_url()?>welcome/clientes">Clientes</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Reservas</a>

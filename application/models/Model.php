@@ -374,4 +374,82 @@ class Model extends CI_Model
 		$query = $this->db->query("UPDATE articulos SET activo = 0 WHERE id_articulo = '".$datos['id_articulo']."'");
 		return "OK";
 	}
+
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/*************** C L I E N T E S ******************************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+
+	function getClientes($buscar){
+		$tabla ="";
+
+		$query = $this->db->query("SELECT  *
+				FROM clientes WHERE clientes.activo = 1
+				AND (clientes.nombre LIKE '%{$buscar}%' OR clientes.apellido1 LIKE '%{$buscar}%' OR clientes.apellido2 LIKE '%{$buscar}%')
+				ORDER BY nombre ASC");
+
+		foreach ($query->result() as $row){
+		}
+
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr style="text-transform:uppercase;">
+                  <th scope="col">#Cliente</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Apellidos</th>
+                  <th scope="col">celular</th>
+                  <th scope="col">Telefono</th>
+                  <th scope="col">#Mascotas</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody style="text-transform:uppercase;">';
+            foreach ($query->result() as $row) {
+            	$query = $this->db->query("SELECT COUNT(id_mascota) AS mascotas FROM mascotas WHERE id_cliente = ".$row->id_cliente."");
+
+            	$datos = "'".$row->id_cliente."||".
+            				$row->nombre."||".
+                            $row->apellido1."||".
+                            $row->apellido2."||".
+                            $row->telefono."||".
+                            $row->celular."||".
+                            $row->calle."||".
+                            $row->numero."||".
+                            $row->colonia."||".
+                            $row->municipio."||".
+                            $row->cp."'";
+            	$tabla.=' <tr>
+            	<td>'.$row->id_cliente.'</td>
+            	<td>'.$row->nombre.'</td>
+            	<td>'.$row->apellido1.' '.$row->apellido2.'</td>
+            	<td>'.$row->celular.'</td>
+            	<td>'.$row->telefono.'</td>
+            	<td>'.$query->row('mascotas').'</td>
+            	<td> 
+            		<a href="#" class="fas fa-2x fa-user-edit"  data-toggle="modal" data-target="#editarCliente" onclick="clientes('.$datos.')" title="EDITAR"></a>
+
+            		&nbsp;&nbsp;
+
+            		
+            		<a href="#" class="fas fa-2x fa-paw" style="color: green;"  onclick="removeClientes('.$datos.')" title="ADMINISTRAR MASCOTAS"></a>
+
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+
+		}else{
+			$tabla="NO SE HAN ENCONTRADO CLIENTES EN LA BUSQUEDA";			
+		}
+
+		return $tabla;
+	}
+
 }
