@@ -78,7 +78,7 @@ function removeEmpleados(datos){
 	$('#remove_usuario').val(d[1]);
 	$('#remove_nombre').val(d[2]);
 	$('#remove_apellido1').val(d[3]);	
-	$('#remove_apeliido2').val(d[4]);
+	$('#remove_apellido2').val(d[4]);
 	$('#remove_celular').val(d[5]);
 	$('#remove_fecha_alta').val(d[6]);
 	$('#remove_id_puesto').val(d[7]);
@@ -88,7 +88,7 @@ function removeEmpleados(datos){
 
 
 function validateForm(){
-	var elemento = document.getElementById("message").textContent;
+	var elemento = document.getElementById("id_cliente").value;
 	if(elemento== "Usuario no disponible"){
 		alert("USUARIO YA EXISTE, INGRESE OTRO USUARIO");
 		return false;

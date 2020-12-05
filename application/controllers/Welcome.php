@@ -79,6 +79,7 @@ class Welcome extends CI_Controller {
 		return $datos;
 	}
 
+
 	/****************************** E  M P L E A D O S - V I S T A S *****************************/
 	function empleados(){
 		$this->valida_session();
@@ -266,13 +267,10 @@ class Welcome extends CI_Controller {
 		echo $resultados;
 	}
 
-	function verificaCliente(){
+	function checkCliente(){
 		// BUSCA EN LA BD QUE EL USUARIO NO SE REPITA
-		$buscar= "";
-		if(isset($_POST['cadena'])){
-		$buscar = $_POST['cadena'];
-		}
-		$resultados= $this->Model->verificaCliente($buscar);		
+
+		$resultados= $this->Model->checkCliente($_POST);		
 	}
 
 	function insertCliente(){
@@ -285,12 +283,42 @@ class Welcome extends CI_Controller {
 		echo $result;
 	}
 
-	function removeCliente(){
-		$result = $this->Model->removeCliente($_POST);
+	 function test($id){
+	 	/*$query = $this->db->query("SELECT COUNT(id_mascota) AS mascotas FROM mascotas WHERE id_cliente = 1");
+	 	print_r($query->row('mascotas'));*/
+	 	echo $id;
+	 }
+
+
+/****************************** C L I E N T E S  - P E T S*****************************/
+	function mascotas($id){
+		$this->valida_session();
+		$this->loadnav();
+		$cliente= $this->Model->getClient($id);
+		//print_r($cliente->nombre) ;
+		$this->load->view('mascotas',$cliente);
+		$this->load->view('footer');
+	}
+
+	function getPets(){
+		$id = $_POST['id'];
+		$result = $this->Model->getPets($id);
 		echo $result;
 	}
-	 function test(){
-	 	$query = $this->db->query("SELECT COUNT(id_mascota) AS mascotas FROM mascotas WHERE id_cliente = 1");
-	 	print_r($query->row('mascotas'));
-	 }
+
+	function getEspcies(){
+		$result = $this->Model->getEspcies();
+		echo $result;
+	}
+
+
+
+
+
+
+
+
+
+
+
 }

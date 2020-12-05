@@ -6,7 +6,7 @@
 		<div class="card">
 		  <div class="card-header alert alert-primary ">
             
-			 <b>AGREGAR ARTICULO</b> 
+			 <b>Agregar artículo</b> 
 
 		  </div>
 
@@ -16,24 +16,24 @@
 
 		  		<div class="form-row">
 				    <div class="form-group col-md-6">
-				      <label for="articulo">ARTICULO</label>
-				      <input type="text" class="form-control" id="articulo" name="articulo" required="" style="text-transform:uppercase" >
+				      <label for="articulo">Artículo</label>
+				      <input type="text" class="form-control" id="articulo" name="articulo" required="">
 				      <p id="message"></p>
 				    </div>
 				    <div class="form-group col-md-6">
-				      <label for="marca">MARCA</label>
-				      <input type="text" class="form-control" id="marca" name="marca" required="" style="text-transform:uppercase" >
+				      <label for="marca">Marca</label>
+				      <input type="text" class="form-control" id="marca" name="marca" required="">
 				    </div>
 			    </div>
 
 			    <div class="form-row">
 				    <div class="form-group col-md-6">
-				      <label for="precio">PRECIO </label>
-				      <input type="text" class="form-control" id="precio" name="precio" required="" pattern="[0-9]+\.[0-9]{2}" title="NUMERO ENTERO CON DOS DECIMALES EJEMPLO 100.00">
+				      <label for="precio">Precio </label>
+				      <input type="text" class="form-control" id="precio" name="precio" required="" pattern="[0-9]+\.[0-9]{2}" title="Número entero son dos decimales ejemplo 100.00">
 				    </div>
 				    <div class="form-group col-md-6">
-				      <label for="existencia">EXISTENCIA </label>
-				      <input type="text" class="form-control" id="existencia" name="existencia" required="" pattern="[0-9]{1,6}" title="NUMERO ENTERO">
+				      <label for="existencia">Existencia </label>
+				      <input type="text" class="form-control" id="existencia" name="existencia" required="" pattern="[0-9]{1,6}" title="Número entero">
 				    </div>
 			    </div>
 

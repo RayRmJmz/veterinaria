@@ -215,13 +215,13 @@ class Model extends CI_Model
 			<div class="table-responsive">
 			<table class="table table-hover ">
               <thead>
-                <tr style="text-transform:uppercase;">
+                <tr>
                   <th scope="col">Servicio</th>
                   <th scope="col">Descripcion</th>
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
-              <tbody style="text-transform:uppercase;">';
+              <tbody>';
             foreach ($query->result() as $row) {
             	$datos = "'".$row->id_servicio."||".
             				$row->servicio."||".
@@ -230,11 +230,11 @@ class Model extends CI_Model
             	<td>'.$row->servicio.'</td>
             	<td>'.$row->descripcion.'</td>
             	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarServicio" onclick="servicios('.$datos.')" title="EDITAR"></a>
+            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarServicio" onclick="servicios('.$datos.')" title="Editar"></a>
 
             		&nbsp;&nbsp;&nbsp;&nbsp;
 
-            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaServicio" onclick="removeServicios('.$datos.')" title="DAR DE BAJA"></a>
+            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaServicio" onclick="removeServicios('.$datos.')" title="Dar de baja"></a>
 
             	</td>
             	<tr>';
@@ -245,7 +245,7 @@ class Model extends CI_Model
 
 
 		}else{
-			$tabla=' <p style="text-transform:uppercase;">NO SE HA ENCONTRADO RESULTADO EN LA BUSQUEDA ' .$buscar. '</p>' ;
+			$tabla=' <p style="text-transform:uppercase;">No se han encontrado resultados en su búsqueda' .$buscar. '</p>' ;
 		}
 
 		return $tabla;
@@ -256,9 +256,9 @@ class Model extends CI_Model
 		$query = $this->db->query("SELECT * FROM servicios WHERE servicio = '".$verifica."' AND activo = 1 LIMIT 1");
 
 		if($query->num_rows()>0){
-			echo "SE HA ENCONTRADO UN SERVICIO PARECIDO";
+			echo "Se ha encontrado un servicio parecido";
 		}else{
-			echo "SERVICIO DISPONIBLE";
+			echo "Servicio disponible";
 		}
 	}
 
@@ -269,7 +269,7 @@ class Model extends CI_Model
 				'".$datos['descripcion']."'
 			)");
 
-		echo "<script type=\"text/javascript\">alert(\"SERVICIO DADO DE ALTA SATISFACTORIAMENTE\");</script>";
+		echo "<script type=\"text/javascript\">alert(\"Servicio dado de alta satisfactoriamente\");</script>";
 	}
 
 	function updateServicio($datos){
@@ -304,15 +304,15 @@ class Model extends CI_Model
 			<div class="table-responsive">
 			<table class="table table-hover ">
               <thead>
-                <tr style="text-transform:uppercase;">
-                  <th scope="col">ARTICULO</th>
-                  <th scope="col">MARCA</th>
-                  <th scope="col">PRECIO</th>
-                  <th scope="col">EXISTENCIA</th>
-                  <th scope="col">ACCIONES</th>
+                <tr>
+                  <th scope="col">Artículo</th>
+                  <th scope="col">Marca</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Existencia</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
-              <tbody style="text-transform:uppercase;">';
+              <tbody>';
             foreach ($query->result() as $row) {
             	$datos = "'".$row->id_articulo."||".
             				$row->articulo."||".
@@ -325,11 +325,11 @@ class Model extends CI_Model
             	<td>'.$row->precio.'</td>
             	<td>'.$row->existencia.'</td>
             	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarArticulo" onclick="articulos('.$datos.')" title="EDITAR"></a>
+            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarArticulo" onclick="articulos('.$datos.')" title="Editar"></a>
 
             		&nbsp;&nbsp;&nbsp;&nbsp;
 
-            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaArticulo" onclick="removeArticulos('.$datos.')" title="DAR DE BAJA"></a>
+            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaArticulo" onclick="removeArticulos('.$datos.')" title="Dar de baja"></a>
 
             	</td>
             	<tr>';
@@ -340,7 +340,7 @@ class Model extends CI_Model
 
 
 		}else{
-			$tabla=' <p style="text-transform:uppercase;">NO SE HA ENCONTRADO RESULTADO EN LA BUSQUEDA ' .$buscar. '</p>' ;
+			$tabla=' <p">No se han encontrado resultados en la búsqueda' .$buscar. '</p>' ;
 		}
 
 		return $tabla;
@@ -351,7 +351,7 @@ class Model extends CI_Model
 		$query = $this->db->query("SELECT * FROM articulos WHERE articulo = '".$verifica."' AND activo = 1 LIMIT 1");
 
 		if($query->num_rows()>0){
-			echo "SE HA ENCONTRADO UN ARTICULO PARECIDO";
+			echo "Se ha encontrado un artículo parecido";
 		}else{
 			echo "";
 		}
@@ -366,7 +366,7 @@ class Model extends CI_Model
 				'".$datos['existencia']."'
 			)");
 
-		echo "<script type=\"text/javascript\">alert(\"ARTICULO DADO DE ALTA SATISFACTORIAMENTE\");</script>";
+		echo "<script type=\"text/javascript\">alert(\"Artículo dado de alta satisfactoriamente\");</script>";
 	}
 
 	function updateArticulo($datos){
@@ -407,17 +407,17 @@ class Model extends CI_Model
 			<div class="table-responsive">
 			<table class="table table-hover ">
               <thead>
-                <tr style="text-transform:uppercase;">
+                <tr>
                   <th scope="col">#Cliente</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellidos</th>
-                  <th scope="col">celular</th>
-                  <th scope="col">Telefono</th>
+                  <th scope="col">Celular</th>
+                  <th scope="col">Teléfono</th>
                   <th scope="col">#Mascotas</th>
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
-              <tbody style="text-transform:uppercase;">';
+              <tbody>';
             foreach ($query->result() as $row) {
             	$query = $this->db->query("SELECT COUNT(id_mascota) AS mascotas FROM mascotas WHERE id_cliente = ".$row->id_cliente."");
 
@@ -432,6 +432,7 @@ class Model extends CI_Model
                             $row->colonia."||".
                             $row->municipio."||".
                             $row->cp."'";
+                $id = $row->id_cliente;
             	$tabla.=' <tr>
             	<td>'.$row->id_cliente.'</td>
             	<td>'.$row->nombre.'</td>
@@ -440,12 +441,15 @@ class Model extends CI_Model
             	<td>'.$row->telefono.'</td>
             	<td>'.$query->row('mascotas').'</td>
             	<td> 
-            		<a href="#" class="fas fa-2x fa-user-edit"  data-toggle="modal" data-target="#editarCliente" onclick="clientes('.$datos.')" title="EDITAR"></a>
+            		<a href="#" class="fas fa-2x fa-user-edit"  data-toggle="modal" data-target="#editarCliente" onclick="clientes('.$datos.')" title="Editar"></a>
 
             		&nbsp;&nbsp;
 
             		
-            		<a href="#" class="fas fa-2x fa-paw" style="color: green;"  onclick="removeClientes('.$datos.')" title="ADMINISTRAR MASCOTAS"></a>
+            		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: blue;" title="TEST"></a>
+
+            		&nbsp;&nbsp;
+            		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: green;"  onclick="petCliente('.$id.')" title="Administrar mascota"></a>
 
             	</td>
             	<tr>';
@@ -456,10 +460,134 @@ class Model extends CI_Model
 
 
 		}else{
-			$tabla="NO SE HAN ENCONTRADO CLIENTES EN LA BUSQUEDA";			
+			$tabla="No se han encontrado resultados en la búsqueda";			
 		}
 
 		return $tabla;
 	}
+
+
+	function checkCliente($verifica){
+
+		$query = $this->db->query("SELECT * FROM clientes WHERE
+									 nombre = '".$verifica['nombre']."'
+									 AND apellido1 = '".$verifica['apellido1']."'
+									 AND apellido2 = '".$verifica['apellido2']."'
+									 AND celular = '".$verifica['celular']."'
+									 AND activo = 1 LIMIT 1");
+
+		if($query->num_rows()>0){
+			echo "Se ha encontrado un clientes con los datos parecidos";
+		}else{
+			echo "";
+		}
+	}
+
+	function insertCliente($datos){
+		$query = $this->db->query("INSERT INTO clientes (nombre, apellido1, apellido2, telefono, celular, calle, numero, colonia, municipio, cp)
+			VALUES (
+				'".$datos['nombre']."',
+				'".$datos['apellido1']."',
+				'".$datos['apellido2']."',
+				'".$datos['telefono']."',
+				'".$datos['celular']."',
+				'".$datos['calle']."',
+				'".$datos['numero']."',
+				'".$datos['colonia']."',
+				'".$datos['municipio']."',
+				'".$datos['cp']."'
+			)");
+
+		echo "<script type=\"text/javascript\">alert(\"Cliente dado de alta satisfactoriamente\");</script>";
+	}
+
+	function updateCliente($datos){
+		$query = $this->db->query(" UPDATE clientes SET
+									nombre = '".$datos['nombre']."',
+									apellido1 = '".$datos['apellido1']."',
+									apellido2 = '".$datos['apellido2']."',
+									telefono = '".$datos['telefono']."',
+									celular = '".$datos['celular']."',
+									calle = '".$datos['calle']."',
+									numero = '".$datos['numero']."',
+									colonia = '".$datos['colonia']."',
+									municipio = '".$datos['municipio']."',
+									cp = '".$datos['cp']."'
+								 WHERE id_cliente = '".$datos['id_cliente']."'");
+		return "OK";
+	}
+
+	function getClient($id){
+		$query = $this->db->query("SELECT * FROM clientes WHERE id_cliente = '".$id."' AND activo = 1 LIMIT 1");
+			return $query->row();
+	}
+
+	function getPets($id){
+		$tabla ="";
+
+		$query = $this->db->query("SELECT mascotas.id_mascota, mascotas.nombre,mascotas.peso, mascotas.estatura, mascotas.fecha_nacimiento, mascotas.id_raza, razas.raza as raza,especies.id_especie, especies.especie as especie, mascotas.id_tamano, tamanos.tamano as tamano, mascotas.id_pelaje, pelajes.pelaje as pelaje FROM mascotas INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN tamanos ON mascotas.id_tamano = tamanos.id_tamano INNER JOIN pelajes ON mascotas.id_pelaje = pelajes.id_pelaje INNER JOIN especies ON razas.id_especie = especies.id_especie
+			 WHERE mascotas.id_cliente = {$id}");
+
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col">Especie</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Peso</th>
+                  <th scope="col">Estatura</th>
+                  <th scope="col">Fecha nacimiento</th>
+                  <th scope="col">Raza</th>
+                  <th scope="col">Pelaje</th>
+                  <th scope="col">Tamaño</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>';
+            foreach ($query->result() as $row) {
+            	$datos = "'".$row->id_mascota."||".
+            				$row->nombre."||".
+            				$row->peso."||".
+            				$row->estatura."||".
+            				$row->id_raza."||".
+            				$row->id_pelaje."||".
+                            $row->id_tamano."'";
+            	$tabla.=' <tr>
+            	<td>'.$row->especie.'</td>
+            	<td>'.$row->nombre.'</td>
+            	<td>'.$row->peso.'</td>
+            	<td>'.$row->estatura.'</td>
+            	<td>'.$row->fecha_nacimiento.'</td>
+            	<td>'.$row->raza.'</td>
+            	<td>'.$row->pelaje.'</td>
+            	<td>'.$row->tamano.'</td>
+            	<td>
+            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarArticulo" onclick="articulos('.$datos.')" title="Editar"></a>
+
+            		&nbsp;&nbsp;&nbsp;&nbsp;
+
+            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaArticulo" onclick="removeArticulos('.$datos.')" title="Dar de baja"></a>
+
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+		}else{
+			$tabla=' <p">No se han encontrado mascotas registradas para este cliente</p>' ;
+		}
+
+		return $tabla;
+	}
+
+	function getEspcies(){
+		$resul = "";
+		
+	}
+
 
 }
