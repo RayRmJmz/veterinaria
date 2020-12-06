@@ -245,7 +245,7 @@ class Model extends CI_Model
 
 
 		}else{
-			$tabla=' <p style="text-transform:uppercase;">No se han encontrado resultados en su búsqueda' .$buscar. '</p>' ;
+			$tabla=' <p>No se han encontrado resultados en su búsqueda:  ' .$buscar. '</p>' ;
 		}
 
 		return $tabla;
@@ -448,9 +448,6 @@ class Model extends CI_Model
             		
             		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: blue;" title="TEST"></a>
 
-            		&nbsp;&nbsp;
-            		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: green;"  onclick="petCliente('.$id.')" title="Administrar mascota"></a>
-
             	</td>
             	<tr>';
             	}
@@ -551,6 +548,7 @@ class Model extends CI_Model
             				$row->nombre."||".
             				$row->peso."||".
             				$row->estatura."||".
+            				$row->fecha_nacimiento."||".
             				$row->id_raza."||".
             				$row->id_pelaje."||".
                             $row->id_tamano."'";
@@ -564,11 +562,9 @@ class Model extends CI_Model
             	<td>'.$row->pelaje.'</td>
             	<td>'.$row->tamano.'</td>
             	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarArticulo" onclick="articulos('.$datos.')" title="Editar"></a>
+            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editPet" onclick="mascotas('.$datos.')" title="Editar"></a>
 
             		&nbsp;&nbsp;&nbsp;&nbsp;
-
-            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaArticulo" onclick="removeArticulos('.$datos.')" title="Dar de baja"></a>
 
             	</td>
             	<tr>';
@@ -584,9 +580,84 @@ class Model extends CI_Model
 		return $tabla;
 	}
 
-	function getEspcies(){
-		$resul = "";
+	function getEspecies(){
+		$result = '<label for="especie">Especies</label>
+              <select name="especie" id="especie" onchange="loadRazas()" class="form-control" required>
+              <option disabled selected value="0"> -- Seleccione especie -- </option>';
 		
+		$query = $this->db->query("SELECT * FROM especies");
+		foreach ($query->result() as $row){
+			$result .= '<option value="'.$row->id_especie.'">'.$row->especie.'</option>';
+		}
+		$result .= '</select>';
+
+		return $result;
+
+	}
+
+	function loadRazas($id_especie){
+		$result = '<label for="raza">Razas</label>
+				<select name="raza" id="raza" class="form-control" required>
+             	<option disabled selected value="0"> -- Seleccione especie -- </option>';
+		$query = $this->db->query("SELECT * FROM razas WHERE id_especie = '".$id_especie['especie']."' ORDER BY raza ");
+		foreach ($query->result() as $row){
+			$result .= '<option value="'.$row->id_raza.'">'.$row->raza.'</option>';
+		}
+		$result .= '</select>';
+
+		return $result;
+	}
+
+	function loadTamano(){
+		$result = '<label for="tamano" >Tamaño</label>
+				<select name="tamano" id="tamano" class="form-control" required>
+             	<option disabled selected value="0"> -- Seleccione tamaño -- </option>';
+		$query = $this->db->query("SELECT * FROM tamanos");
+		foreach ($query->result() as $row){
+			$result .= '<option value="'.$row->id_tamano.'">'.$row->tamano.'</option>';
+		}
+		$result .= '</select>';
+
+		return $result;
+	}
+
+	function loadPelaje(){
+		$result = '<label for="pelaje">Tipo pelaje</label>
+				<select name="pelaje" id="pelaje" class="form-control" required>
+             	<option disabled selected value="0"> -- Seleccione pelaje -- </option>';
+		$query = $this->db->query("SELECT * FROM pelajes");
+		foreach ($query->result() as $row){
+			$result .= '<option value="'.$row->id_pelaje.'">'.$row->pelaje.'</option>';
+		}
+		$result .= '</select>';
+
+		return $result;
+	}
+
+	function insertPet($datos){
+		
+		$query = $this->db->query("INSERT INTO mascotas (id_cliente, id_raza, id_tamano, id_pelaje, nombre, fecha_nacimiento, peso, estatura)
+			VALUES(
+			'".$datos['id_cliente']."',
+			'".$datos['id_raza']."',
+			'".$datos['id_tamano']."',
+			'".$datos['id_pelaje']."',
+			'".$datos['nombre']."',
+			'".$datos['fecha_nacimiento']."',
+			'".$datos['peso']."',
+			'".$datos['estatura']."'
+			)");
+		return "OK";
+	}
+
+	function editPet($datos){
+		$query = $this->db->query("UPDATE mascotas SET
+				nombre = '".$datos['nombre']."',
+				fecha_nacimiento = '".$datos['fecha_nacimiento']."',
+				peso = '".$datos['peso']."',
+				estatura = '".$datos['estatura']."'
+				WHERE id_mascota = '".$datos['id_mascota']."'
+			");
 	}
 
 

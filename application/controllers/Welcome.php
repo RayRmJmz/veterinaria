@@ -268,8 +268,6 @@ class Welcome extends CI_Controller {
 	}
 
 	function checkCliente(){
-		// BUSCA EN LA BD QUE EL USUARIO NO SE REPITA
-
 		$resultados= $this->Model->checkCliente($_POST);		
 	}
 
@@ -283,20 +281,19 @@ class Welcome extends CI_Controller {
 		echo $result;
 	}
 
-	 function test($id){
-	 	/*$query = $this->db->query("SELECT COUNT(id_mascota) AS mascotas FROM mascotas WHERE id_cliente = 1");
-	 	print_r($query->row('mascotas'));*/
-	 	echo $id;
-	 }
-
-
 /****************************** C L I E N T E S  - P E T S*****************************/
 	function mascotas($id){
 		$this->valida_session();
 		$this->loadnav();
 		$cliente= $this->Model->getClient($id);
-		//print_r($cliente->nombre) ;
 		$this->load->view('mascotas',$cliente);
+		$this->load->view('footer');
+	}
+
+	function agregarMascota($id){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('agregarMascota',$id);
 		$this->load->view('footer');
 	}
 
@@ -306,11 +303,38 @@ class Welcome extends CI_Controller {
 		echo $result;
 	}
 
-	function getEspcies(){
-		$result = $this->Model->getEspcies();
+	function getEspecies(){
+		$result = $this->Model->getEspecies();
 		echo $result;
 	}
 
+	function loadRazas(){
+		$result = $this->Model->loadRazas($_POST);
+		echo $result;
+
+	}
+
+	function loadTamano(){
+		$result = $this->Model->loadTamano($_POST);
+		echo $result;
+
+	}
+
+	function loadPelaje(){
+		$result = $this->Model->loadPelaje($_POST);
+		echo $result;
+
+	}
+
+	function insertPet(){
+		$result = $this->Model->insertPet($_POST);
+		echo $result;
+	}
+
+	function editPet(){
+		$result = $this->Model->editPet($_POST);
+		echo $result;
+	}
 
 
 

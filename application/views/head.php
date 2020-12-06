@@ -9,6 +9,7 @@
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
     <link href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css" rel="stylesheet" />
+   
 
     <!-- PLUGINS CSS STYLE -->
     <link href="<?=base_url()?>assets/plugins/toaster/toastr.min.css" rel="stylesheet" />
@@ -20,8 +21,10 @@
     <link href="<?=base_url()?>assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
     <link href="<?=base_url()?>assets/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<?=base_url()?>assets/plugins/bootstrap/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="<?=base_url()?>assets/css/head.css">
     <link rel="stylesheet" href="<?=base_url()?>assets/css/empleados.css">
+  
 
     <!-- FAVICON -->
     <link href="<?=base_url()?>assets/img/logo-fav.png" rel="shortcut icon"/>
