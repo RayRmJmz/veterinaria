@@ -446,7 +446,7 @@ class Model extends CI_Model
             		&nbsp;&nbsp;
 
             		
-            		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: blue;" title="TEST"></a>
+            		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: blue;" title="Mascotas"></a>
 
             	</td>
             	<tr>';
@@ -659,6 +659,271 @@ class Model extends CI_Model
 				WHERE id_mascota = '".$datos['id_mascota']."'
 			");
 	}
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/*************** R E S E R V A S ******************************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
 
+	function getReservas($info){
+		$tabla ="";
+
+		$query = $this->db->query("SELECT reservas.id_reserva, reservas.id_mascota, Date(reservas.fecha_reserva) as date ,time(reservas.fecha_servicio) as time ,reservas.total, clientes.nombre as cliente,clientes.apellido1 as apellido, mascotas.nombre as mascota, razas.raza, pelajes.pelaje, tamanos.tamano, especies.especie FROM reservas INNER JOIN mascotas ON reservas.id_mascota = mascotas.id_mascota INNER JOIN clientes ON mascotas.id_cliente = clientes.id_cliente INNER JOIN pelajes ON mascotas.id_pelaje = pelajes.id_pelaje INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN tamanos ON mascotas.id_tamano = tamanos.id_tamano INNER JOIN especies ON razas.id_especie = especies.id_especie WHERE reservas.activo = 1 AND DATE(reservas.fecha_servicio) = '".$info['fecha']."' ");
+
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col">Folio</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Hora</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Especie</th>
+                  <th scope="col">Mascota</th>
+                  <th scope="col">Raza</th>
+                  <th scope="col">Pelaje</th>
+                  <th scope="col">Tamaño</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>';
+            foreach ($query->result() as $row) {
+            	$delete = $row->id_reserva;
+            	$tabla.=' <tr>
+            	<td>'.$row->id_reserva.'</td>
+            	<td>'.$row->date.'</td>
+            	<td>'.$row->time.'</td>
+            	<td>'.$row->cliente.' '.$row->apellido.'</td>
+            	<td>'.$row->especie.'</td>
+            	<td>'.$row->mascota.'</td>
+            	<td>'.$row->raza.'</td>
+            	<td>'.$row->pelaje.'</td>
+            	<td>'.$row->tamano.'</td>
+            	<td>$ '.$row->total.'</td>
+            	<td>
+            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editPet"  title="Editar"></a>
+
+            		&nbsp;&nbsp;&nbsp;&nbsp;
+            		<a href="#" type="button" class="fas fa-2x fa-trash-alt" style="color: red;"   title="Cancelar reserva" onclick="deleteReserva('.$delete.')"></a>
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+		}else{
+			$tabla=' <p">No se han encontrado reservas registradas esta fecha </p>' . $info['fecha'];
+		}
+		return $tabla;
+
+	}
+
+	function getClientReservation($info){
+
+		$query = $this->db->query("SELECT * FROM clientes WHERE nombre LIKE '%".$info['q']."%' OR apellido1 LIKE '%".$info['q']."%' OR apellido2 LIKE '%".$info['q']."%' OR celular LIKE '%".$info['q']."%' OR telefono LIKE '%".$info['q']."%'");
+		$data = array();
+		if ($query->num_rows()>0) {
+			 foreach ($query->result() as $row){
+			 	$data[] = array('id'=>$row->id_cliente, 'text' =>$row->nombre.' '.$row->apellido1.' '.$row->apellido2.' Celular: '.$row->celular.' Teléfono: '.$row->telefono);
+			 }
+		}else{
+			$data[] = array('id'=>0, 'text' =>'No encontrado');
+		}
+
+		return $data;	
+	}
+
+	function getMascotaReservation($data){
+		$info = '';
+		$query = $this->db->query("SELECT mascotas.id_mascota, mascotas.nombre, mascotas.peso, mascotas.estatura, razas.raza, tamanos.tamano, pelajes.pelaje, especies.especie FROM mascotas INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN tamanos ON mascotas.id_tamano = tamanos.id_tamano INNER JOIN pelajes ON mascotas.id_pelaje = pelajes.id_pelaje INNER JOIN especies ON razas.id_especie = especies.id_especie WHERE  id_cliente = '".$data['id_cliente']."'");
+		if ($query->num_rows()>0){
+			foreach ($query->result() as $row) {
+				$info.='
+				<div class="form-check col-md-4">
+				<input type="checkbox" name="mascota" onclick="onlyOne(this)" value="'.$row->id_mascota.'">
+				<label for="mascota">'.$row->nombre.'</label>
+				<br> Especie: '.$row->especie.'<br> Raza: '.$row->raza.'<br> Tamaño: '.$row->tamano.'<br> Pelaje: '.$row->pelaje.'<br> Peso: '.$row->peso.'<br> Estatura: '.$row->estatura.'<br>	
+				</div>';	
+			}
+		}else{
+			$info.='Este cliente no tiene mascotas registradas';
+		}
+		return $info;
+
+	}
+
+	function getServiciosReservation(){
+		$info = '';
+		$query = $this->db->query("SELECT * FROM servicios WHERE activo = 1");
+		if ($query->num_rows()>0){
+			foreach ($query->result() as $row) {
+				$info.='
+				<div class="form-check col-md-4">
+				<input type="checkbox" name="servicio[]"  value="'.$row->id_servicio.'"> 
+				<label for="servicios">'.$row->servicio.'</label>
+				<br>Descripción: '.$row->descripcion.'
+				</div>';
+			}
+		}else{
+			$info.='No se han registrado servicios, registre servicios o llame al administrador';
+		}
+		return $info;
+	}
+
+
+	function insertReserva($data){
+
+		$id_empleado = $this->session->userdata('id');
+	 	$fecha =  date("Y-m-d H:i:s", strtotime($data['fecha']));
+	 	$this->db->trans_start();
+		$this->db->query("SET @now =  NOW()");
+		$this->db->query("INSERT INTO reservas ( id_mascota, id_empleado, fecha_reserva, fecha_servicio, activo,total, comentarios) VALUES ({$data['mascota']}, {$id_empleado}, @now, '{$fecha}', 1, {$data['total']}, '{$data['comentarios']}' )");
+		$this->db->query("SET @last_id_reserva = last_insert_id()");
+		foreach($data['servicio'] as $selected){
+			$this->db->query("INSERT INTO reservas_servicios (id_reserva, id_servicio )
+			VALUES(@last_id_reserva, {$selected})");
+		}
+		
+		if($this->db->trans_complete()){
+			echo "<script type=\"text/javascript\">alert(\"Reserva registrada con exito\");</script>";
+			return TRUE;
+		}else{
+			echo "<script type=\"text/javascript\">alert(\"Ha ocurrido un error no se ha podido hacer reserva\");</script>";
+			return FALSE;
+		}
+	}
+
+	function deleteReserva($data){
+
+		$query = $this->db->query("UPDATE reservas SET activo = 0 WHERE id_reserva = {$data['id']}");
+		return "OK";
+		
+	}
+
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+	/*************** O R D E N - D E - T R A B A J O S **************************************************/
+	/****************************************************************************************************/
+	/****************************************************************************************************/
+
+	function getOrdenesTrabajo($data){
+		$tabla ="";
+		date_default_timezone_set("America/Mexico_City");
+		$hoy = date("Y-m-d");
+		$query = $this->db->query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.total, mascotas.nombre, estados.estado, especies.especie, razas.raza FROM orden_trabajo INNER JOIN mascotas ON orden_trabajo.id_mascota = mascotas.id_mascota INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN especies ON razas.id_especie = especies.id_especie INNER JOIN estados ON orden_trabajo.id_estado = estados.id_estado WHERE orden_trabajo.activo = 1 AND DATE(orden_trabajo.fecha_servicio) = '{$hoy}' AND (razas.raza LIKE '%{$data}%' OR mascotas.nombre LIKE '%{$data}%' OR especies.especie LIKE '%{$data}%' ) ORDER BY id_orden_trabajo ASC");
+
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col">Folio</th>
+                  <th scope="col">Especie</th>
+                  <th scope="col">Raza</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">#Servicios</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>';
+            foreach ($query->result() as $row) {
+            	$query = $this->db->query("SELECT COUNT(id_orden_trabajo) as servicios FROM orden_trabajo_servicios WHERE id_orden_trabajo = $row->id_orden_trabajo");
+            	$id = $row->id_orden_trabajo;
+            	$tabla.=' <tr>
+            	<td>'.$row->id_orden_trabajo.'</td>
+            	<td>'.$row->especie.'</td>
+            	<td>'.$row->raza.'</td>
+            	<td>'.$row->nombre.'</td>
+            	<td>'.$query->row('servicios').'</td>
+            	<td>'.$row->total.'</td>
+            	<td>
+
+            		&nbsp;&nbsp;&nbsp;&nbsp;
+            		<a href="'.base_url().'welcome/editarOrden/'.$id.'" class="fas fa-2x fa-edit" title="Editar orden de servicio"></a>
+
+            		&nbsp;&nbsp;&nbsp;&nbsp;
+            		<a href="#" type="button" class="fas fa-2x fa-trash-alt" style="color: red;"   title="Cancelar reserva" onclick="deleteService('.$id.')"></a>
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+		}else{
+			$tabla=' <p">No se han encontrado ordenes de trabajo </p>' . $data;
+		}
+		return $tabla;
+	}
+
+	function agregarOrden($data){
+		$id_empleado = $this->session->userdata('id');
+	 	$this->db->trans_start();
+		$this->db->query("SET @now =  NOW()");
+		$this->db->query("INSERT INTO 
+			orden_trabajo ( id_mascota, id_empleado, id_estado, fecha_servicio, total, activo, comentarios) 
+			VALUES ({$data['mascota']}, {$id_empleado}, 1, @now, {$data['total']}, 1, '{$data['comentarios']}' )");
+		$this->db->query("SET @last_id_rol = last_insert_id()");
+		foreach($data['servicio'] as $selected){
+			$this->db->query("INSERT INTO orden_trabajo_servicios (id_orden_trabajo, id_servicio )
+			VALUES(@last_id_rol, {$selected})");
+		}
+		
+		if($this->db->trans_complete()){
+			echo "<script type=\"text/javascript\">alert(\"Reserva registrada con exito\");</script>";
+			return TRUE;
+		}else{
+			echo "<script type=\"text/javascript\">alert(\"Ha ocurrido un error no se ha podido hacer reserva\");</script>";
+			return FALSE;
+		}
+	}
+
+	function deleteOrden($data){
+		$query = $this->db->query("UPDATE orden_trabajo SET activo = 0 WHERE id_orden_trabajo = {$data['id']}");
+		return "OK";
+	}
+
+	function getOrdenTrabajo($id){
+		$query = $this->db->query("SELECT clientes.nombre as cliente, clientes.apellido1, clientes.apellido2, clientes.telefono, clientes.celular, clientes.calle, clientes.numero, clientes.colonia, clientes.cp, clientes.municipio, mascotas.nombre, mascotas.peso, mascotas.estatura, mascotas.fecha_nacimiento, especies.especie, razas.raza, pelajes.pelaje, tamanos.tamano, orden_trabajo.id_orden_trabajo, orden_trabajo.fecha_servicio, orden_trabajo.total FROM orden_trabajo INNER JOIN mascotas ON orden_trabajo.id_mascota = mascotas.id_mascota INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN especies ON razas.id_especie = especies.id_especie INNER JOIN clientes ON mascotas.id_cliente = clientes.id_cliente INNER JOIN pelajes ON mascotas.id_pelaje = pelajes.id_pelaje INNER JOIN tamanos ON mascotas.id_tamano = tamanos.id_tamano WHERE orden_trabajo.id_orden_trabajo = {$id}");
+		return $query->row();
+	}
+
+
+
+	function getOrders($id){
+
+		$result='';
+		$estados = $query = $this->db->query("SELECT * FROM estados");
+		$query = $this->db->query("SELECT orden_trabajo_servicios.id_orden_trabajo, orden_trabajo_servicios.id_servicio, orden_trabajo_servicios.id_empleado, orden_trabajo_servicios.id_estado, orden_trabajo_servicios.hora_inicio, orden_trabajo_servicios.hora_fin, servicios.servicio, estados.estado FROM orden_trabajo_servicios INNER JOIN servicios ON orden_trabajo_servicios.id_servicio = servicios.id_servicio INNER JOIN estados ON orden_trabajo_servicios.id_estado = estados.id_estado WHERE id_orden_trabajo = {$id['id_orden']}");
+		foreach ($query->result() as $row) {
+
+			$result.='<div>
+						<form action="#" id="service'.$row->id_servicio.'">
+
+		  				<label for="servicio" >'.$row->servicio.'</label>
+		  				<p>Estado actual: '.$row->estado.' </p>
+		  				<select  class="form-select" name="servicio" id="servicio'.$row->id_servicio.'">
+		  				<option value="0" >Seleccione estado</option>';
+
+		  				foreach ($estados->result() as $select) {
+		  					$result.='<option value="'.$select->id_estado.'">'.$select->estado.'</option>';
+		  				}
+			  		$result.='</select>
+			  			<button type="button" class="btn btn-primary mb-2" onclick="update('.$row->id_orden_trabajo.','.$row->id_servicio.');">Actualizar</button>
+			  			</form>
+		  			</div>';
+		}
+
+		return $result;
+
+	}
+
+	
 
 }

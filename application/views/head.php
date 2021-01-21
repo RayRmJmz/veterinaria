@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="<?=base_url()?>assets/plugins/bootstrap/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="<?=base_url()?>assets/css/head.css">
+    <link rel="stylesheet" href="<?=base_url()?>assets/css/select2.min.css">
     <link rel="stylesheet" href="<?=base_url()?>assets/css/empleados.css">
   
 
@@ -82,14 +83,22 @@
               </li>
             <?php }?>
             <li class="nav-item">
-              <a class="nav-link" href="<?=base_url()?>welcome/clientes">Clientes</span></a>
+              <a class="nav-link" href="<?=base_url()?>welcome/clientes">Clientes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Reservas</a>
+              <a class="nav-link" href="<?=base_url()?>welcome/reservas">Reservas</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Orden de trabajo</a>
-            </li>
+            <li class="btn-group dropdown">
+                <a class="nav-link dropdown-toggle admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Orden de trabajo
+                </a>
+                <div class="dropdown-menu">
+                  <!-- Dropdown menu links -->
+                  <a class="dropdown-item" href="<?=base_url()?>welcome/nuevaOrden">Nueva orden de trabajo</a>
+                  <a class="dropdown-item" href="<?=base_url()?>welcome/ordenesActivas">Ver activas</a>
+                  <a class="dropdown-item" href="<?=base_url()?>welcome/ordenesRealizadas">Ver realizadas</a>
+                </div>
+              </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Ventas</a>
             </li>

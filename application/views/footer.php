@@ -32,6 +32,7 @@
 <script src="<?=base_url()?>assets/js/date-range.js"></script>
 <script src="<?=base_url()?>assets/js/map.js"></script>
 <script src="<?=base_url()?>assets/js/custom.js"></script>
+<script src="<?=base_url()?>assets/js/select2.min.js"></script>
 
 
 

@@ -30,13 +30,11 @@ class Welcome extends CI_Controller {
 	}
 
 	function login (){
-
 		$usuario =  $this->input->post('usuario');
 		$password =  $this->input->post('password');
 
 		$fila = $this->Model->getUser($usuario);
 		
-
 		if($fila != null){
 			if($fila->contrasena == $password){
 				$data = array(
@@ -70,15 +68,12 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	
-
 	/****************************** A D M I N I S T R A D O R *****************************/
 	function getCatalogos(){
 		$datos ['puestos'] = $this->Model->getPuestos();
 		$datos ['roles'] = $this->Model->getRoles();
 		return $datos;
 	}
-
 
 	/****************************** E  M P L E A D O S - V I S T A S *****************************/
 	function empleados(){
@@ -153,7 +148,6 @@ class Welcome extends CI_Controller {
 		$this->loadnav();
 		$this->load->view('administrador/agregarServicio');
 		$this->load->view('footer');
-
 	}
 	/****************************** S E R V I C I O S - C R U D *****************************/
 
@@ -234,6 +228,7 @@ class Welcome extends CI_Controller {
 	}
 
 	function removeArticulo(){
+
 		$result = $this->Model->removeArticulo($_POST);
 		echo $result;
 	}
@@ -336,7 +331,127 @@ class Welcome extends CI_Controller {
 		echo $result;
 	}
 
+	/****************************** R E S E R V A S*****************************/
+	
+	function reservas(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('reservas');
+		$this->load->view('footer');
+	}
 
+	function agregarReserva(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('agregarReserva');
+		$this->load->view('footer');
+	}
+
+	function getReservas(){
+		$result = $this->Model->getReservas($_POST);
+		echo $result;
+	}
+
+	function getClientReservation (){
+		$result = $this->Model->getClientReservation($_POST);
+		echo json_encode($result);	
+	}
+
+	 function getMascotaReservation(){
+	 	$result = $this->Model->getMascotaReservation($_POST);
+		echo $result;
+	 }
+
+	 function getServiciosReservation(){
+	 	$result = $this->Model->getServiciosReservation();
+		echo $result;
+	 }
+
+	 function insertReserva(){
+	 	$result = $this->Model->insertReserva($_POST);
+	 	if($result){
+	 		$this->reservas();
+	 	}else{
+	 		$this->agregarReserva();
+	 	}
+	 }
+
+	 function deleteReserva(){
+	 	$result = $this->Model->deleteReserva($_POST);
+	 	echo $result;
+	 }
+
+
+	 /****************************** O R D E N  - D E - T R A B A J O*****************************/
+
+	 function nuevaOrden(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('agregarOrden');
+		$this->load->view('footer');
+	}
+
+	function ordenesActivas(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('ordenesActivas');
+		$this->load->view('footer');
+	}
+
+	function ordenesRealizadas(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('ordenesActivas');
+		$this->load->view('footer');
+	}
+
+	function agregarOrden(){
+		$result = $this->Model->agregarOrden($_POST);
+	 	if($result){
+	 		$this->ordenesActivas();
+	 	}else{
+	 		$this->nuevaOrden();
+	 	}
+	}
+
+	function deleteOrden(){
+		$result = $this->Model->deleteOrden($_POST);
+	 	echo $result;
+	}
+
+	function getOrdenesTrabajo(){
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$result = $this->Model->getOrdenesTrabajo($buscar);
+		echo $result;
+	}
+
+	function editarOrden($id){
+		$this->valida_session();
+		$this->loadnav();
+		$data = $this->Model->getOrdenTrabajo($id);
+		$datos =array('data'=>$data);
+		$this->load->view('editarOrden',$datos);
+		$this->load->view('footer');
+	}
+
+	function getOrders(){
+		$result = $this->Model->getOrders($_POST);
+		echo $result;
+	}
+
+	function updateOrdenServicio(){
+		echo " actualizar servicioS " . $_POST['id_orden'] . " " . $_POST['id_servicio'] . " estado ".  $_POST['estado'] ;
+	}
+
+
+
+	function test(){
+		$estados = $query = $this->db->query("SELECT * FROM estados");
+		echo $estados->row('estado');
+	}
 
 
 
