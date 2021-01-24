@@ -726,7 +726,7 @@ class Model extends CI_Model
             	<td>$ '.$row->total.'</td>
             	<td>
             		<a href="#" class="fas fa-2x fa-arrow-alt-circle-up"  data-toggle="modal" data-target="#editPet"  title="Enviar a orden de trabajo"></a>
-
+           
               <td class="action-buttons">
                 <a href="#" data-toggle="modal" data-target="" title="Editar">
                   <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -737,7 +737,7 @@ class Model extends CI_Model
 
                 &nbsp;&nbsp;
 
-                <a href="#" data-toggle="modal" data-target="" title="Cancelar reserva">
+                <a href="#" data-toggle="modal" data-target="" title="Cancelar reserva" onclick="deleteReserva('.$delete.')">
                   <svg height="35" class="icon-action" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z"/><path d="M0 0h48v48H0z" fill="none"/></svg>
                 </a>
             	</td>
