@@ -212,13 +212,13 @@ class Model extends CI_Model
 
 		if($query->num_rows()>0){
 			$tabla.='
-			<div class="table-responsive">
-			<table class="table table-hover ">
+			<div class="table-responsive style="display: block;">
+			<table class="table table-hover tabla ">
               <thead>
                 <tr>
-                  <th scope="col">Servicio</th>
-                  <th scope="col">Descripcion</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">Servicio</th>
+                  <th class="titles-thead" scope="col">Descripcion</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
@@ -226,16 +226,22 @@ class Model extends CI_Model
             	$datos = "'".$row->id_servicio."||".
             				$row->servicio."||".
                             $row->descripcion."'";
-            	$tabla.=' <tr>
+            	$tabla.=' <tr class="first-column">
             	<td>'.$row->servicio.'</td>
             	<td>'.$row->descripcion.'</td>
-            	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarServicio" onclick="servicios('.$datos.')" title="Editar"></a>
+            	<td class="action-buttons">
+                <a href="#" data-toggle="modal" data-target="#editarServicio" onclick="servicios('.$datos.')" title="Editar">
+                  <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path d="M19.607,18.746c0,0.881-0.716,1.624-1.597,1.624H5.231c-0.881,0-1.597-0.743-1.597-1.624V5.967  c0-0.881,0.716-1.571,1.597-1.571h7.454V3.332H5.231c-1.468,0-2.662,1.168-2.662,2.636v12.778c0,1.468,1.194,2.688,2.662,2.688  h12.778c1.468,0,2.662-1.221,2.662-2.688v-7.428h-1.065V18.746z"/>
+                  <path d="M20.807,3.17c-0.804-0.805-2.207-0.805-3.012,0l-7.143,7.143c-0.068,0.068-0.117,0.154-0.14,0.247L9.76,13.571  c-0.045,0.181,0.008,0.373,0.14,0.506c0.101,0.101,0.237,0.156,0.376,0.156c0.043,0,0.086-0.005,0.129-0.016l3.012-0.753  c0.094-0.023,0.179-0.072,0.247-0.14l7.143-7.143c0.402-0.402,0.624-0.937,0.624-1.506S21.21,3.572,20.807,3.17z M13.016,12.467  l-2.008,0.502l0.502-2.008l5.909-5.909l1.506,1.506L13.016,12.467z M20.054,5.428l-0.376,0.376l-1.506-1.506l0.376-0.376  c0.402-0.402,1.104-0.402,1.506,0c0.201,0.201,0.312,0.468,0.312,0.753C20.366,4.96,20.255,5.227,20.054,5.428z"/>
+                  </svg>
+                </a>
 
-            		&nbsp;&nbsp;&nbsp;&nbsp;
+            		&nbsp;&nbsp;
 
-            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaServicio" onclick="removeServicios('.$datos.')" title="Dar de baja"></a>
-
+                <a href="#" data-toggle="modal" data-target="#bajaServicio" onclick="removeServicios('.$datos.')" title="Dar de baja">
+                  <svg height="35" class="icon-action" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z"/><path d="M0 0h48v48H0z" fill="none"/></svg>
+                </a>
             	</td>
             	<tr>';
             	}
@@ -245,7 +251,7 @@ class Model extends CI_Model
 
 
 		}else{
-			$tabla=' <p>No se han encontrado resultados en su búsqueda:  ' .$buscar. '</p>' ;
+			$tabla=' <p>No se han encontrado resultados en su búsqueda  ' .$buscar. '</p>' ;
 		}
 
 		return $tabla;
@@ -301,15 +307,15 @@ class Model extends CI_Model
 
 		if($query->num_rows()>0){
 			$tabla.='
-			<div class="table-responsive">
-			<table class="table table-hover ">
+			<div class="table-responsive style="display: block;">
+			<table class="table table-hover tabla ">
               <thead>
                 <tr>
-                  <th scope="col">Artículo</th>
-                  <th scope="col">Marca</th>
-                  <th scope="col">Precio</th>
-                  <th scope="col">Existencia</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">Artículo</th>
+                  <th class="titles-thead" scope="col">Marca</th>
+                  <th class="titles-thead" scope="col">Precio</th>
+                  <th class="titles-thead" scope="col">Existencia</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
@@ -319,17 +325,24 @@ class Model extends CI_Model
             				$row->marca."||".
             				$row->precio."||".
                             $row->existencia."'";
-            	$tabla.=' <tr>
+            	$tabla.=' <tr class="first-column">
             	<td>'.$row->articulo.'</td>
             	<td>'.$row->marca.'</td>
             	<td>'.$row->precio.'</td>
             	<td>'.$row->existencia.'</td>
-            	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editarArticulo" onclick="articulos('.$datos.')" title="Editar"></a>
+              <td class= "action-buttons">
+                <a href="#" data-toggle="modal" data-target="#editarArticulo" onclick="articulos('.$datos.')" title="Editar">
+                  <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path d="M19.607,18.746c0,0.881-0.716,1.624-1.597,1.624H5.231c-0.881,0-1.597-0.743-1.597-1.624V5.967  c0-0.881,0.716-1.571,1.597-1.571h7.454V3.332H5.231c-1.468,0-2.662,1.168-2.662,2.636v12.778c0,1.468,1.194,2.688,2.662,2.688  h12.778c1.468,0,2.662-1.221,2.662-2.688v-7.428h-1.065V18.746z"/>
+                  <path d="M20.807,3.17c-0.804-0.805-2.207-0.805-3.012,0l-7.143,7.143c-0.068,0.068-0.117,0.154-0.14,0.247L9.76,13.571  c-0.045,0.181,0.008,0.373,0.14,0.506c0.101,0.101,0.237,0.156,0.376,0.156c0.043,0,0.086-0.005,0.129-0.016l3.012-0.753  c0.094-0.023,0.179-0.072,0.247-0.14l7.143-7.143c0.402-0.402,0.624-0.937,0.624-1.506S21.21,3.572,20.807,3.17z M13.016,12.467  l-2.008,0.502l0.502-2.008l5.909-5.909l1.506,1.506L13.016,12.467z M20.054,5.428l-0.376,0.376l-1.506-1.506l0.376-0.376  c0.402-0.402,1.104-0.402,1.506,0c0.201,0.201,0.312,0.468,0.312,0.753C20.366,4.96,20.255,5.227,20.054,5.428z"/>
+                  </svg>
+                </a>
 
-            		&nbsp;&nbsp;&nbsp;&nbsp;
+            		&nbsp;&nbsp;
 
-            		<a href="#" class="fas fa-2x fa-minus-circle" style="color: red;"  data-toggle="modal" data-target="#bajaArticulo" onclick="removeArticulos('.$datos.')" title="Dar de baja"></a>
+                <a href="#" data-toggle="modal" data-target="#bajaArticulo" onclick="removeArticulos('.$datos.')" title="Dar de baja">
+                  <svg height="35" class="icon-action" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z"/><path d="M0 0h48v48H0z" fill="none"/></svg>
+                </a>
 
             	</td>
             	<tr>';
@@ -404,17 +417,17 @@ class Model extends CI_Model
 
 		if($query->num_rows()>0){
 			$tabla.='
-			<div class="table-responsive">
-			<table class="table table-hover ">
+			<div class="table-responsive style="display: block;">
+			<table class="table table-hover tabla">
               <thead>
                 <tr>
-                  <th scope="col">#Cliente</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Apellidos</th>
-                  <th scope="col">Celular</th>
-                  <th scope="col">Teléfono</th>
-                  <th scope="col">#Mascotas</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">No. Cliente</th>
+                  <th class="titles-thead" scope="col">Nombre</th>
+                  <th class="titles-thead" scope="col">Apellidos</th>
+                  <th class="titles-thead" scope="col">Celular</th>
+                  <th class="titles-thead" scope="col">Teléfono</th>
+                  <th class="titles-thead" scope="col">Mascotas</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
@@ -433,20 +446,24 @@ class Model extends CI_Model
                             $row->municipio."||".
                             $row->cp."'";
                 $id = $row->id_cliente;
-            	$tabla.=' <tr>
+            	$tabla.=' <tr class="first-column">
             	<td>'.$row->id_cliente.'</td>
             	<td>'.$row->nombre.'</td>
             	<td>'.$row->apellido1.' '.$row->apellido2.'</td>
             	<td>'.$row->celular.'</td>
             	<td>'.$row->telefono.'</td>
             	<td>'.$query->row('mascotas').'</td>
-            	<td> 
-            		<a href="#" class="fas fa-2x fa-user-edit"  data-toggle="modal" data-target="#editarCliente" onclick="clientes('.$datos.')" title="Editar"></a>
+              <td class="action-buttons">
+                <a href="#" data-toggle="modal" data-target="#editarCliente" onclick="clientes('.$datos.')" title="Editar">
+                  <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path d="M19.607,18.746c0,0.881-0.716,1.624-1.597,1.624H5.231c-0.881,0-1.597-0.743-1.597-1.624V5.967  c0-0.881,0.716-1.571,1.597-1.571h7.454V3.332H5.231c-1.468,0-2.662,1.168-2.662,2.636v12.778c0,1.468,1.194,2.688,2.662,2.688  h12.778c1.468,0,2.662-1.221,2.662-2.688v-7.428h-1.065V18.746z"/>
+                  <path d="M20.807,3.17c-0.804-0.805-2.207-0.805-3.012,0l-7.143,7.143c-0.068,0.068-0.117,0.154-0.14,0.247L9.76,13.571  c-0.045,0.181,0.008,0.373,0.14,0.506c0.101,0.101,0.237,0.156,0.376,0.156c0.043,0,0.086-0.005,0.129-0.016l3.012-0.753  c0.094-0.023,0.179-0.072,0.247-0.14l7.143-7.143c0.402-0.402,0.624-0.937,0.624-1.506S21.21,3.572,20.807,3.17z M13.016,12.467  l-2.008,0.502l0.502-2.008l5.909-5.909l1.506,1.506L13.016,12.467z M20.054,5.428l-0.376,0.376l-1.506-1.506l0.376-0.376  c0.402-0.402,1.104-0.402,1.506,0c0.201,0.201,0.312,0.468,0.312,0.753C20.366,4.96,20.255,5.227,20.054,5.428z"/></svg>
+                </a>
 
             		&nbsp;&nbsp;
 
-            		
-            		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: blue;" title="Mascotas"></a>
+
+            		<a href="'.base_url().'welcome/mascotas/'.$id.'"   class="fas fa-2x fa-paw" style="color: #6c757d;" title="Mascotas"></a>
 
             	</td>
             	<tr>';
@@ -457,7 +474,7 @@ class Model extends CI_Model
 
 
 		}else{
-			$tabla="No se han encontrado resultados en la búsqueda";			
+			$tabla="No se han encontrado resultados en la búsqueda";
 		}
 
 		return $tabla;
@@ -528,18 +545,18 @@ class Model extends CI_Model
 		if($query->num_rows()>0){
 			$tabla.='
 			<div class="table-responsive">
-			<table class="table table-hover ">
+			<table class="table table-hover tabla">
               <thead>
                 <tr>
-                  <th scope="col">Especie</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Peso</th>
-                  <th scope="col">Estatura</th>
-                  <th scope="col">Fecha nacimiento</th>
-                  <th scope="col">Raza</th>
-                  <th scope="col">Pelaje</th>
-                  <th scope="col">Tamaño</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">Nombre</th>
+                  <th class="titles-thead" scope="col">Especie</th>
+                  <th class="titles-thead" scope="col">Raza</th>
+                  <th class="titles-thead" scope="col">Peso (kg)</th>
+                  <th class="titles-thead" scope="col">Estatura (m)</th>
+                  <th class="titles-thead" scope="col">Fecha nacimiento</th>
+                  <th class="titles-thead" scope="col">Pelaje</th>
+                  <th class="titles-thead" scope="col">Tamaño</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
@@ -547,24 +564,28 @@ class Model extends CI_Model
             	$datos = "'".$row->id_mascota."||".
             				$row->nombre."||".
             				$row->peso."||".
+            				$row->id_raza."||".
             				$row->estatura."||".
             				$row->fecha_nacimiento."||".
-            				$row->id_raza."||".
             				$row->id_pelaje."||".
-                            $row->id_tamano."'";
-            	$tabla.=' <tr>
-            	<td>'.$row->especie.'</td>
+                    $row->id_tamano."'";
+            	$tabla.=' <tr class="first-column">
             	<td>'.$row->nombre.'</td>
+            	<td>'.$row->especie.'</td>
+            	<td>'.$row->raza.'</td>
             	<td>'.$row->peso.'</td>
             	<td>'.$row->estatura.'</td>
             	<td>'.$row->fecha_nacimiento.'</td>
-            	<td>'.$row->raza.'</td>
             	<td>'.$row->pelaje.'</td>
             	<td>'.$row->tamano.'</td>
-            	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editPet" onclick="mascotas('.$datos.')" title="Editar"></a>
+              <td class="action-buttons">
+                <a href="#" data-toggle="modal" data-target="#editPet" onclick="mascotas('.$datos.')" title="Editar">
+                  <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path d="M19.607,18.746c0,0.881-0.716,1.624-1.597,1.624H5.231c-0.881,0-1.597-0.743-1.597-1.624V5.967  c0-0.881,0.716-1.571,1.597-1.571h7.454V3.332H5.231c-1.468,0-2.662,1.168-2.662,2.636v12.778c0,1.468,1.194,2.688,2.662,2.688  h12.778c1.468,0,2.662-1.221,2.662-2.688v-7.428h-1.065V18.746z"/>
+                  <path d="M20.807,3.17c-0.804-0.805-2.207-0.805-3.012,0l-7.143,7.143c-0.068,0.068-0.117,0.154-0.14,0.247L9.76,13.571  c-0.045,0.181,0.008,0.373,0.14,0.506c0.101,0.101,0.237,0.156,0.376,0.156c0.043,0,0.086-0.005,0.129-0.016l3.012-0.753  c0.094-0.023,0.179-0.072,0.247-0.14l7.143-7.143c0.402-0.402,0.624-0.937,0.624-1.506S21.21,3.572,20.807,3.17z M13.016,12.467  l-2.008,0.502l0.502-2.008l5.909-5.909l1.506,1.506L13.016,12.467z M20.054,5.428l-0.376,0.376l-1.506-1.506l0.376-0.376  c0.402-0.402,1.104-0.402,1.506,0c0.201,0.201,0.312,0.468,0.312,0.753C20.366,4.96,20.255,5.227,20.054,5.428z"/></svg>
+                </a>
 
-            		&nbsp;&nbsp;&nbsp;&nbsp;
+            		&nbsp;&nbsp;
 
             	</td>
             	<tr>';
@@ -584,7 +605,7 @@ class Model extends CI_Model
 		$result = '<label for="especie">Especies</label>
               <select name="especie" id="especie" onchange="loadRazas()" class="form-control" required>
               <option disabled selected value="0"> -- Seleccione especie -- </option>';
-		
+
 		$query = $this->db->query("SELECT * FROM especies");
 		foreach ($query->result() as $row){
 			$result .= '<option value="'.$row->id_especie.'">'.$row->especie.'</option>';
@@ -635,7 +656,7 @@ class Model extends CI_Model
 	}
 
 	function insertPet($datos){
-		
+
 		$query = $this->db->query("INSERT INTO mascotas (id_cliente, id_raza, id_tamano, id_pelaje, nombre, fecha_nacimiento, peso, estatura)
 			VALUES(
 			'".$datos['id_cliente']."',
@@ -673,26 +694,26 @@ class Model extends CI_Model
 		if($query->num_rows()>0){
 			$tabla.='
 			<div class="table-responsive">
-			<table class="table table-hover ">
+			<table class="table table-hover tabla">
               <thead>
                 <tr>
-                  <th scope="col">Folio</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Hora</th>
-                  <th scope="col">Cliente</th>
-                  <th scope="col">Especie</th>
-                  <th scope="col">Mascota</th>
-                  <th scope="col">Raza</th>
-                  <th scope="col">Pelaje</th>
-                  <th scope="col">Tamaño</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">Folio</th>
+                  <th class="titles-thead" scope="col">Fecha</th>
+                  <th class="titles-thead" scope="col">Hora</th>
+                  <th class="titles-thead" scope="col">Cliente</th>
+                  <th class="titles-thead" scope="col">Especie</th>
+                  <th class="titles-thead" scope="col">Mascota</th>
+                  <th class="titles-thead" scope="col">Raza</th>
+                  <th class="titles-thead" scope="col">Pelaje</th>
+                  <th class="titles-thead" scope="col">Tamaño</th>
+                  <th class="titles-thead" scope="col">Total</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
             foreach ($query->result() as $row) {
             	$delete = $row->id_reserva;
-            	$tabla.=' <tr>
+            	$tabla.=' <tr class="first-column">
             	<td>'.$row->id_reserva.'</td>
             	<td>'.$row->date.'</td>
             	<td>'.$row->time.'</td>
@@ -703,11 +724,18 @@ class Model extends CI_Model
             	<td>'.$row->pelaje.'</td>
             	<td>'.$row->tamano.'</td>
             	<td>$ '.$row->total.'</td>
-            	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editPet"  title="Editar"></a>
+              <td class="action-buttons">
+                <a href="#" data-toggle="modal" data-target="" title="Editar">
+                  <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path d="M19.607,18.746c0,0.881-0.716,1.624-1.597,1.624H5.231c-0.881,0-1.597-0.743-1.597-1.624V5.967  c0-0.881,0.716-1.571,1.597-1.571h7.454V3.332H5.231c-1.468,0-2.662,1.168-2.662,2.636v12.778c0,1.468,1.194,2.688,2.662,2.688  h12.778c1.468,0,2.662-1.221,2.662-2.688v-7.428h-1.065V18.746z"/>
+                  <path d="M20.807,3.17c-0.804-0.805-2.207-0.805-3.012,0l-7.143,7.143c-0.068,0.068-0.117,0.154-0.14,0.247L9.76,13.571  c-0.045,0.181,0.008,0.373,0.14,0.506c0.101,0.101,0.237,0.156,0.376,0.156c0.043,0,0.086-0.005,0.129-0.016l3.012-0.753  c0.094-0.023,0.179-0.072,0.247-0.14l7.143-7.143c0.402-0.402,0.624-0.937,0.624-1.506S21.21,3.572,20.807,3.17z M13.016,12.467  l-2.008,0.502l0.502-2.008l5.909-5.909l1.506,1.506L13.016,12.467z M20.054,5.428l-0.376,0.376l-1.506-1.506l0.376-0.376  c0.402-0.402,1.104-0.402,1.506,0c0.201,0.201,0.312,0.468,0.312,0.753C20.366,4.96,20.255,5.227,20.054,5.428z"/></svg>
+                </a>
 
-            		&nbsp;&nbsp;&nbsp;&nbsp;
-            		<a href="#" type="button" class="fas fa-2x fa-trash-alt" style="color: red;"   title="Cancelar reserva" onclick="deleteReserva('.$delete.')"></a>
+                &nbsp;&nbsp;
+
+                <a href="#" data-toggle="modal" data-target="" title="Cancelar reserva">
+                  <svg height="35" class="icon-action" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z"/><path d="M0 0h48v48H0z" fill="none"/></svg>
+                </a>
             	</td>
             	<tr>';
             	}
@@ -734,7 +762,7 @@ class Model extends CI_Model
 			$data[] = array('id'=>0, 'text' =>'No encontrado');
 		}
 
-		return $data;	
+		return $data;
 	}
 
 	function getMascotaReservation($data){
@@ -746,8 +774,8 @@ class Model extends CI_Model
 				<div class="form-check col-md-4">
 				<input type="checkbox" name="mascota" onclick="onlyOne(this)" value="'.$row->id_mascota.'">
 				<label for="mascota">'.$row->nombre.'</label>
-				<br> Especie: '.$row->especie.'<br> Raza: '.$row->raza.'<br> Tamaño: '.$row->tamano.'<br> Pelaje: '.$row->pelaje.'<br> Peso: '.$row->peso.'<br> Estatura: '.$row->estatura.'<br>	
-				</div>';	
+				<br> Especie: '.$row->especie.'<br> Raza: '.$row->raza.'<br> Tamaño: '.$row->tamano.'<br> Pelaje: '.$row->pelaje.'<br> Peso: '.$row->peso.'<br> Estatura: '.$row->estatura.'<br>
+				</div>';
 			}
 		}else{
 			$info.='Este cliente no tiene mascotas registradas';
@@ -763,7 +791,7 @@ class Model extends CI_Model
 			foreach ($query->result() as $row) {
 				$info.='
 				<div class="form-check col-md-4">
-				<input type="checkbox" name="servicio[]"  value="'.$row->id_servicio.'"> 
+				<input type="checkbox" name="servicio[]"  value="'.$row->id_servicio.'">
 				<label for="servicios">'.$row->servicio.'</label>
 				<br>Descripción: '.$row->descripcion.'
 				</div>';
@@ -787,7 +815,7 @@ class Model extends CI_Model
 			$this->db->query("INSERT INTO reservas_servicios (id_reserva, id_servicio )
 			VALUES(@last_id_reserva, {$selected})");
 		}
-		
+
 		if($this->db->trans_complete()){
 			echo "<script type=\"text/javascript\">alert(\"Reserva registrada con exito\");</script>";
 			return TRUE;
@@ -801,7 +829,7 @@ class Model extends CI_Model
 
 		$query = $this->db->query("UPDATE reservas SET activo = 0 WHERE id_reserva = {$data['id']}");
 		return "OK";
-		
+
 	}
 
 	/****************************************************************************************************/
@@ -866,15 +894,15 @@ class Model extends CI_Model
 		$id_empleado = $this->session->userdata('id');
 	 	$this->db->trans_start();
 		$this->db->query("SET @now =  NOW()");
-		$this->db->query("INSERT INTO 
-			orden_trabajo ( id_mascota, id_empleado, id_estado, fecha_servicio, total, activo, comentarios) 
+		$this->db->query("INSERT INTO
+			orden_trabajo ( id_mascota, id_empleado, id_estado, fecha_servicio, total, activo, comentarios)
 			VALUES ({$data['mascota']}, {$id_empleado}, 1, @now, {$data['total']}, 1, '{$data['comentarios']}' )");
 		$this->db->query("SET @last_id_rol = last_insert_id()");
 		foreach($data['servicio'] as $selected){
 			$this->db->query("INSERT INTO orden_trabajo_servicios (id_orden_trabajo, id_servicio )
 			VALUES(@last_id_rol, {$selected})");
 		}
-		
+
 		if($this->db->trans_complete()){
 			echo "<script type=\"text/javascript\">alert(\"Reserva registrada con exito\");</script>";
 			return TRUE;
@@ -924,6 +952,6 @@ class Model extends CI_Model
 
 	}
 
-	
+
 
 }
