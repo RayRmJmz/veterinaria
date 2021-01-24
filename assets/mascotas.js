@@ -12,7 +12,7 @@ function obtener_mascotas(){
 		data :{id: id },
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
 
@@ -21,9 +21,9 @@ function mascotas(datos){
 	$('#edit_id_mascota').val(d[0]);
 	$('#edit_nombre').val(d[1]);
 	$('#edit_peso').val(d[2]);
-	$('#edit_estatura').val(d[3]);
-	$('#edit_fecha').val(d[4]);
-	$('#edit_raza').val(d[5]);
+	$('#edit_raza').val(d[3]);
+	$('#edit_estatura').val(d[4]);
+	$('#edit_fecha').val(d[5]);
 	$('#edit_pelaje').val(d[6]);
 	$('#edit_tamano').val(d[7]);
 
@@ -39,15 +39,15 @@ function getEspecies(){
 		//data :{id: id },
 	})
 	.done(function(resultado){
-		$("#formEspecie").html(resultado);	
+		$("#formEspecie").html(resultado);
 	})
 }
 
 function loadRazas(){
 	var especie = document.getElementById("especie").value;
-	
+
 	console.log("cargando razas " + especie);
-	
+
 	$.ajax({
 		url:globalURL+'loadRazas',
 		type: 'POST',
@@ -55,7 +55,7 @@ function loadRazas(){
 		data :{especie: especie },
 	})
 	.done(function(resultado){
-		$("#formRaza").html(resultado);	
+		$("#formRaza").html(resultado);
 	})
 
 
@@ -65,7 +65,7 @@ function loadRazas(){
 		dataType: 'html',
 	})
 	.done(function(resultado){
-		$("#formPelaje").html(resultado);	
+		$("#formPelaje").html(resultado);
 	})
 
 
@@ -75,7 +75,7 @@ function loadRazas(){
 		dataType: 'html',
 	})
 	.done(function(resultado){
-		$("#formTamano").html(resultado);	
+		$("#formTamano").html(resultado);
 	})
 
 }
@@ -83,7 +83,7 @@ function loadRazas(){
 function addPet(){
 
 	 var callInsert = false;
-	 
+
 	if (document.forms["petsForm"]["nombre"].value == "") {
     	document.getElementById('messName').innerHTML='Ingrese nombre mascota';
    		callInsert = false;
@@ -147,7 +147,7 @@ function addPet(){
     	document.getElementById('messagePelaje').innerHTML='';
     	callInsert = true;
     }
-    
+
     if(callInsert){
     	var url = window.location.pathname;
 		var id = url.substring(url.lastIndexOf('/') + 1);
