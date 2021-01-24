@@ -36,3 +36,23 @@ function update(id_orden, id_servicio){
 		obtener_ordenes();
 	})
 }
+
+function successOrden(){
+	var url = window.location.pathname;
+	var id_orden = url.substring(url.lastIndexOf('/') + 1);
+
+	//location.href = globalURL+'ordenesActivas';
+	console.log(id_orden);
+
+	$.ajax({
+		url:globalURL+'successOrden',
+		type: 'POST',
+		dataType: 'html',
+		data :{id_orden: id_orden },
+	})
+	.done(function(resultado){
+		window.alert("Orden de trabajo termiando");
+		location.href = globalURL+'ordenesActivas';
+
+	})
+}

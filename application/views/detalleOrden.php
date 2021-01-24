@@ -1,4 +1,4 @@
-<script src="<?=base_url()?>assets/editOrder.js"></script>
+<script src="<?=base_url()?>assets/detalleOrden.js"></script>
 
 <!-- ************************************************************************* -->
 <div class="content-wrapper">
@@ -6,7 +6,7 @@
 		<div class="card">
 		  <div class="card-header">
 		  	<div class="" style="text-align: center;" >
-		  		<h2>Editar - actualizar orden de trabajo</h2>
+		  		<h2>Detalle orden de trabajo</h2>
 		  	</div>
 		  </div>
 
@@ -73,8 +73,7 @@
 		  	</div>
 		  	
 		  	<div>
-		  		<a  type="button" onclick="successOrden()" class="btn btn-success">Terminar servicio</a>
-		  		<a href="<?=base_url()?>welcome/ordenesActivas" type="button" class="btn btn-primary">Regresar</a>
+		  		<a href="<?=base_url()?>welcome/ordenesRealizadas" type="button" class="btn btn-primary">Regresar</a>
 		  		
 		  	</div>
    

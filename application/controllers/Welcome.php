@@ -401,7 +401,7 @@ class Welcome extends CI_Controller {
 	function ordenesRealizadas(){
 		$this->valida_session();
 		$this->loadnav();
-		$this->load->view('ordenesActivas');
+		$this->load->view('ordenesRealizadas');
 		$this->load->view('footer');
 	}
 
@@ -443,14 +443,49 @@ class Welcome extends CI_Controller {
 	}
 
 	function updateOrdenServicio(){
-		echo " actualizar servicioS " . $_POST['id_orden'] . " " . $_POST['id_servicio'] . " estado ".  $_POST['estado'] ;
+		$result = $this->Model->updateOrdenServicio($_POST);
+		echo $result ;
+	}
+
+	function successOrden(){
+		$result = $this->Model->successOrden($_POST);
+		echo $result ;
+	}
+
+	function getOrdenesTrabajoRealizadas(){
+		$buscar= "";
+		if(isset($_POST['cadena'])){
+		$buscar = $_POST['cadena'];
+		}
+		$result = $this->Model->getOrdenesTrabajoRealizadas($buscar);
+		echo $result;
+	}
+
+	function detalleOrden($id){
+		$this->valida_session();
+		$this->loadnav();
+		$data = $this->Model->detalleOrden($id);
+		$datos =array('data'=>$data);
+		$this->load->view('detalleOrden',$datos);
+		$this->load->view('footer');
+	}
+
+	function ordenesDetalle(){
+		$result = $this->Model->ordenesDetalle($_POST);
+		echo $result;
 	}
 
 
 
 	function test(){
-		$estados = $query = $this->db->query("SELECT * FROM estados");
-		echo $estados->row('estado');
+		$estado = $this->db->query("SELECT orden_trabajo_servicios.id_estado FROM orden_trabajo_servicios WHERE orden_trabajo_servicios.id_orden_trabajo = 20 AND orden_trabajo_servicios.id_servicio = 2");
+
+		if($estado->row('id_estado') == 2){
+			echo "update";
+		}else{
+			echo "No update";
+		}
+		echo $estado->row('id_estado');
 	}
 
 

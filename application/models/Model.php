@@ -704,7 +704,7 @@ class Model extends CI_Model
             	<td>'.$row->tamano.'</td>
             	<td>$ '.$row->total.'</td>
             	<td>
-            		<a href="#" class="fas fa-2x fa-edit"  data-toggle="modal" data-target="#editPet"  title="Editar"></a>
+            		<a href="#" class="fas fa-2x fa-arrow-alt-circle-up"  data-toggle="modal" data-target="#editPet"  title="Enviar a orden de trabajo"></a>
 
             		&nbsp;&nbsp;&nbsp;&nbsp;
             		<a href="#" type="button" class="fas fa-2x fa-trash-alt" style="color: red;"   title="Cancelar reserva" onclick="deleteReserva('.$delete.')"></a>
@@ -814,7 +814,7 @@ class Model extends CI_Model
 		$tabla ="";
 		date_default_timezone_set("America/Mexico_City");
 		$hoy = date("Y-m-d");
-		$query = $this->db->query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.total, mascotas.nombre, estados.estado, especies.especie, razas.raza FROM orden_trabajo INNER JOIN mascotas ON orden_trabajo.id_mascota = mascotas.id_mascota INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN especies ON razas.id_especie = especies.id_especie INNER JOIN estados ON orden_trabajo.id_estado = estados.id_estado WHERE orden_trabajo.activo = 1 AND DATE(orden_trabajo.fecha_servicio) = '{$hoy}' AND (razas.raza LIKE '%{$data}%' OR mascotas.nombre LIKE '%{$data}%' OR especies.especie LIKE '%{$data}%' ) ORDER BY id_orden_trabajo ASC");
+		$query = $this->db->query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.total, mascotas.nombre, estados.estado, especies.especie, razas.raza FROM orden_trabajo INNER JOIN mascotas ON orden_trabajo.id_mascota = mascotas.id_mascota INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN especies ON razas.id_especie = especies.id_especie INNER JOIN estados ON orden_trabajo.id_estado = estados.id_estado WHERE orden_trabajo.activo = 1 AND orden_trabajo.id_estado = 1 AND DATE(orden_trabajo.fecha_servicio) = '{$hoy}' AND (razas.raza LIKE '%{$data}%' OR mascotas.nombre LIKE '%{$data}%' OR especies.especie LIKE '%{$data}%' ) ORDER BY id_orden_trabajo ASC");
 
 		if($query->num_rows()>0){
 			$tabla.='
@@ -870,13 +870,13 @@ class Model extends CI_Model
 			orden_trabajo ( id_mascota, id_empleado, id_estado, fecha_servicio, total, activo, comentarios) 
 			VALUES ({$data['mascota']}, {$id_empleado}, 1, @now, {$data['total']}, 1, '{$data['comentarios']}' )");
 		$this->db->query("SET @last_id_rol = last_insert_id()");
-		foreach($data['servicio'] as $selected){
-			$this->db->query("INSERT INTO orden_trabajo_servicios (id_orden_trabajo, id_servicio )
-			VALUES(@last_id_rol, {$selected})");
+		foreach($data['servicio'] as $selected){	
+			$this->db->query("INSERT INTO orden_trabajo_servicios (id_estado, id_orden_trabajo, id_servicio )
+			VALUES(99, @last_id_rol, {$selected})");
 		}
 		
 		if($this->db->trans_complete()){
-			echo "<script type=\"text/javascript\">alert(\"Reserva registrada con exito\");</script>";
+			echo "<script type=\"text/javascript\">alert(\"Orden registrada con exito\");</script>";
 			return TRUE;
 		}else{
 			echo "<script type=\"text/javascript\">alert(\"Ha ocurrido un error no se ha podido hacer reserva\");</script>";
@@ -897,7 +897,7 @@ class Model extends CI_Model
 
 
 	function getOrders($id){
-
+		
 		$result='';
 		$estados = $query = $this->db->query("SELECT * FROM estados");
 		$query = $this->db->query("SELECT orden_trabajo_servicios.id_orden_trabajo, orden_trabajo_servicios.id_servicio, orden_trabajo_servicios.id_empleado, orden_trabajo_servicios.id_estado, orden_trabajo_servicios.hora_inicio, orden_trabajo_servicios.hora_fin, servicios.servicio, estados.estado FROM orden_trabajo_servicios INNER JOIN servicios ON orden_trabajo_servicios.id_servicio = servicios.id_servicio INNER JOIN estados ON orden_trabajo_servicios.id_estado = estados.id_estado WHERE id_orden_trabajo = {$id['id_orden']}");
@@ -921,9 +921,93 @@ class Model extends CI_Model
 		}
 
 		return $result;
-
 	}
 
+	function updateOrdenServicio($data){
+		$estado = $this->db->query("SELECT orden_trabajo_servicios.id_estado FROM orden_trabajo_servicios WHERE orden_trabajo_servicios.id_orden_trabajo = {$data['id_orden']} AND orden_trabajo_servicios.id_servicio = {$data['id_servicio']}");
+		if($estado->row('id_estado') == 99 ){
+			$this->db->query("SET @now =  NOW()");
+			$query = $this->db->query("UPDATE orden_trabajo_servicios SET id_estado = {$data['estado']}, hora_inicio = @now WHERE orden_trabajo_servicios.id_orden_trabajo = {$data['id_orden']} AND orden_trabajo_servicios.id_servicio = {$data['id_servicio']}");
+		}else{
+			$this->db->query("SET @now =  NOW()");
+			$query = $this->db->query("UPDATE orden_trabajo_servicios SET id_estado = {$data['estado']}, hora_fin = @now WHERE orden_trabajo_servicios.id_orden_trabajo = {$data['id_orden']} AND orden_trabajo_servicios.id_servicio = {$data['id_servicio']}");
+		}
+
+		return $query;
+	}
+
+	function successOrden($data){
+		$query = $this->db->query("UPDATE orden_trabajo SET id_estado = 3 WHERE orden_trabajo.id_orden_trabajo= {$data['id_orden']}");
+		return $query;
+	}
 	
+	function getOrdenesTrabajoRealizadas($data){
+		$tabla ="";
+		date_default_timezone_set("America/Mexico_City");
+		$hoy = date("Y-m-d");
+		$query = $this->db->query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.total, mascotas.nombre, estados.estado, especies.especie, razas.raza FROM orden_trabajo INNER JOIN mascotas ON orden_trabajo.id_mascota = mascotas.id_mascota INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN especies ON razas.id_especie = especies.id_especie INNER JOIN estados ON orden_trabajo.id_estado = estados.id_estado WHERE orden_trabajo.activo = 1 AND orden_trabajo.id_estado = 3 AND DATE(orden_trabajo.fecha_servicio) = '{$hoy}' AND (razas.raza LIKE '%{$data}%' OR mascotas.nombre LIKE '%{$data}%' OR especies.especie LIKE '%{$data}%' ) ORDER BY id_orden_trabajo ASC");
+
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col">Folio</th>
+                  <th scope="col">Especie</th>
+                  <th scope="col">Raza</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">#Servicios</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>';
+            foreach ($query->result() as $row) {
+            	$query = $this->db->query("SELECT COUNT(id_orden_trabajo) as servicios FROM orden_trabajo_servicios WHERE id_orden_trabajo = $row->id_orden_trabajo");
+            	$id = $row->id_orden_trabajo;
+            	$tabla.=' <tr>
+            	<td>'.$row->id_orden_trabajo.'</td>
+            	<td>'.$row->especie.'</td>
+            	<td>'.$row->raza.'</td>
+            	<td>'.$row->nombre.'</td>
+            	<td>'.$query->row('servicios').'</td>
+            	<td>'.$row->total.'</td>
+            	<td>
+
+            		&nbsp;&nbsp;&nbsp;&nbsp;
+            		<a href="'.base_url().'welcome/detalleOrden/'.$id.'" class="fas fa-2x fa-eye" title="Ver detalle orden de trabajo"></a>
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+		}else{
+			$tabla=' <p">No se han encontrado ordenes de trabajo  </p>' . $data;
+		}
+		return $tabla;
+	}
+
+
+	function detalleOrden($id){
+		$query = $this->db->query("SELECT clientes.nombre as cliente, clientes.apellido1, clientes.apellido2, clientes.telefono, clientes.celular, clientes.calle, clientes.numero, clientes.colonia, clientes.cp, clientes.municipio, mascotas.nombre, mascotas.peso, mascotas.estatura, mascotas.fecha_nacimiento, especies.especie, razas.raza, pelajes.pelaje, tamanos.tamano, orden_trabajo.id_orden_trabajo, orden_trabajo.fecha_servicio, orden_trabajo.total FROM orden_trabajo INNER JOIN mascotas ON orden_trabajo.id_mascota = mascotas.id_mascota INNER JOIN razas ON mascotas.id_raza = razas.id_raza INNER JOIN especies ON razas.id_especie = especies.id_especie INNER JOIN clientes ON mascotas.id_cliente = clientes.id_cliente INNER JOIN pelajes ON mascotas.id_pelaje = pelajes.id_pelaje INNER JOIN tamanos ON mascotas.id_tamano = tamanos.id_tamano WHERE orden_trabajo.id_orden_trabajo = {$id}");
+		return $query->row();
+	}
+
+	function ordenesDetalle($id){
+		
+		$result='';
+		$query = $this->db->query("SELECT orden_trabajo_servicios.id_orden_trabajo, orden_trabajo_servicios.id_servicio,orden_trabajo_servicios.id_empleado, orden_trabajo_servicios.id_estado, orden_trabajo_servicios.hora_inicio, orden_trabajo_servicios.hora_fin, servicios.servicio, estados.estado FROM orden_trabajo_servicios INNER JOIN servicios ON orden_trabajo_servicios.id_servicio = servicios.id_servicio INNER JOIN estados ON orden_trabajo_servicios.id_estado = estados.id_estado WHERE id_orden_trabajo = {$id['id_orden']}");
+		foreach ($query->result() as $row) {
+
+			$result.='<div>
+		  				<h5> '.$row->servicio.' estado: '.$row->estado.' incio: '.$row->hora_inicio.'  fin: '.$row->hora_fin.' </h5> 
+		  			</div>';
+		}
+
+		return $result;
+	}
 
 }
