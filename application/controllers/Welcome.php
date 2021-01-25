@@ -480,6 +480,14 @@ class Welcome extends CI_Controller {
 		echo $result;
 	}
 
+	/****************************** P U N T O - D E - V E N T A *****************************/
+	function ventas(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('puntoVenta');
+		$this->load->view('footer');
+	}
+
 
 
 	function test(){

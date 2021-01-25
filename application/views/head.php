@@ -100,7 +100,7 @@
                 </div>
               </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Ventas</a>
+              <a class="nav-link" href="<?=base_url()?>welcome/ventas">Punto de venta</a>
             </li>
             <?php if ($rol == 1) { ?>
               <li class="btn-group dropdown">
