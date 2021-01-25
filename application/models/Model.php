@@ -723,7 +723,7 @@ class Model extends CI_Model
             	<td>'.$row->raza.'</td>
             	<td>'.$row->pelaje.'</td>
             	<td>'.$row->tamano.'</td>
-            	<td>$ '.$row->total.'</td>           		
+            	<td>$ '.$row->total.'</td>
 	            <td class="action-buttons">
 	            	<a href="#" class="fas fa-2x fa-arrow-alt-circle-up"  data-toggle="modal" data-target="#editPet" onclick="sendReservationToOrder('.$id_reserva.')" title="Enviar a orden de trabajo"></a>
 
@@ -873,7 +873,7 @@ class Model extends CI_Model
 			VALUES(99, @last_id_rol, {$row->id_servicio})");
 		}
 		$this->db->query("UPDATE reservas SET id_estado = 3 WHERE reservas.id_reserva = {$data['id']}");
-		
+
 		if($this->db->trans_complete()){
 			echo "<script type=\"text/javascript\">alert(\"Orden registrada con exito\");</script>";
 			return TRUE;
@@ -987,21 +987,27 @@ class Model extends CI_Model
 		$query = $this->db->query("SELECT orden_trabajo_servicios.id_orden_trabajo, orden_trabajo_servicios.id_servicio, orden_trabajo_servicios.id_empleado, orden_trabajo_servicios.id_estado, orden_trabajo_servicios.hora_inicio, orden_trabajo_servicios.hora_fin, servicios.servicio, estados.estado FROM orden_trabajo_servicios INNER JOIN servicios ON orden_trabajo_servicios.id_servicio = servicios.id_servicio INNER JOIN estados ON orden_trabajo_servicios.id_estado = estados.id_estado WHERE id_orden_trabajo = {$id['id_orden']}");
 		foreach ($query->result() as $row) {
 
-			$result.='<div>
-						<form action="#" id="service'.$row->id_servicio.'">
+      $result.='
+				<div class="card card-custom gutter-b col-md-3 col-lg-2" style="margin: 15px; box-shadow: 0 0 30px 0 rgba(82,63,105,.05);">
+          <form style="    display: flex;
+          flex-direction: column" action="#" id="service'.$row->id_servicio.'">
+            <div class="card-header" style="background: #fff;
+            padding-bottom: 0; display: flex; justify-content: center;">
+              <label for="servicio" style="font-size: 1rem; color: #000; font-weight: 500; margin-bottom: 15px;"> '.$row->servicio.'</label>
+            </div>
+            <p style="color: #000; font-weight: 300; margin: 25px 0;">Estado actual: <span style="color: #29cc97; font-weight: 500;">'.$row->estado.'</span></p>
+            <select  style="margin-bottom: 30px;" class="form-select" name="servicio" id="servicio'.$row->id_servicio.'">
+            <option value="0" >Modificar estado</option>';
 
-		  				<label for="servicio" >'.$row->servicio.'</label>
-		  				<p>Estado actual: '.$row->estado.' </p>
-		  				<select  class="form-select" name="servicio" id="servicio'.$row->id_servicio.'">
-		  				<option value="0" >Seleccione estado</option>';
-
-		  				foreach ($estados->result() as $select) {
-		  					$result.='<option value="'.$select->id_estado.'">'.$select->estado.'</option>';
-		  				}
-			  		$result.='</select>
-			  			<button type="button" class="btn btn-primary mb-2" onclick="update('.$row->id_orden_trabajo.','.$row->id_servicio.');">Actualizar</button>
-			  			</form>
-		  			</div>';
+              foreach ($estados->result() as $select) {
+                $result.='<option value="'.$select->id_estado.'">'.$select->estado.'</option>';
+              }
+            $result.='</select>
+            <div class="card-footer" style="background: #fff; display: flex; justify-content: center;">
+              <button type="button" class="btn btn-primary" onclick="update('.$row->id_orden_trabajo.','.$row->id_servicio.');">Actualizar</button>
+            </div>
+          </form>
+        </div>';
 		}
 
 		return $result;
