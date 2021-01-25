@@ -381,6 +381,11 @@ class Welcome extends CI_Controller {
 	 	echo $result;
 	 }
 
+	 function sendReservationToOrder(){
+	 	$result = $this->Model->sendReservationToOrder($_POST);
+	 	echo $result;
+	 }
+
 
 	 /****************************** O R D E N  - D E - T R A B A J O*****************************/
 
@@ -478,14 +483,9 @@ class Welcome extends CI_Controller {
 
 
 	function test(){
-		$estado = $this->db->query("SELECT orden_trabajo_servicios.id_estado FROM orden_trabajo_servicios WHERE orden_trabajo_servicios.id_orden_trabajo = 20 AND orden_trabajo_servicios.id_servicio = 2");
-
-		if($estado->row('id_estado') == 2){
-			echo "update";
-		}else{
-			echo "No update";
-		}
-		echo $estado->row('id_estado');
+		$estado = $this->db->query("SELECT * FROM orden_trabajo_servicios WHERE orden_trabajo_servicios.id_orden_trabajo = 20 AND orden_trabajo_servicios.id_servicio = 2")->row();
+		$data = "'{$estado->id_estado}'";
+		echo $data;
 	}
 
 

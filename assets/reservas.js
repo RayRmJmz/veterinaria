@@ -52,6 +52,26 @@ function deleteReserva(id){
 	});
 }
 
+function sendReservationToOrder(id){
+	var id_reserva = { id }
+	$.ajax({
+		url:globalURL+'sendReservationToOrder',
+		method:'POST',
+		data :id_reserva,
+		//dataType: 'json',
+		success:function(res){
+			// $("#resultado").html(res);
+			console.log(res);
+			window.alert("Reserva enviada a orden de servicio correctamente");
+			obtener_reservas();
+		},
+		error:function(error){
+			console.error(error);
+			console.alert("No se ha podido enviar a orden de servicio");
+		}
+	});
+}
+
 
 
 
