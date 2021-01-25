@@ -9,7 +9,7 @@
           <div class="row container-search">
             <div class="search">
               <section class="search-input">
-                <input type="text" name="busqueda" id="busqueda" placeholder="Buscar reverva por folio, nombre mscota..." class="form-control mb-6">
+                <input type="text" name="busqueda" id="busqueda" placeholder="Buscar reserva por mascota, folio..." class="form-control mb-6">
               </section>
             </div>
             <div class="btn-add_empleado" style= "margin: auto 0 auto 22.5px;">
