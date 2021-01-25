@@ -726,7 +726,7 @@ class Model extends CI_Model
             	<td>$ '.$row->total.'</td>
             	<td>
             		<a href="#" class="fas fa-2x fa-arrow-alt-circle-up"  data-toggle="modal" data-target="#editPet"  title="Enviar a orden de trabajo"></a>
-           
+
               <td class="action-buttons">
                 <a href="#" data-toggle="modal" data-target="" title="Editar">
                   <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -775,11 +775,18 @@ class Model extends CI_Model
 		if ($query->num_rows()>0){
 			foreach ($query->result() as $row) {
 				$info.='
-				<div class="form-check col-md-4">
-				<input type="checkbox" name="mascota" onclick="onlyOne(this)" value="'.$row->id_mascota.'">
-				<label for="mascota">'.$row->nombre.'</label>
-				<br> Especie: '.$row->especie.'<br> Raza: '.$row->raza.'<br> Tamaño: '.$row->tamano.'<br> Pelaje: '.$row->pelaje.'<br> Peso: '.$row->peso.'<br> Estatura: '.$row->estatura.'<br>
-				</div>';
+				<div class="card card-custom gutter-b col-md-3 col-lg-2" style="    margin: 15px;">
+        <div class="card-header" style="background: #fff;">
+          <div class="card-title" style="display: flex;">
+          <input style="margin-top: 10px;" type="checkbox" name="mascota" onclick="onlyOne(this)" value="'.$row->id_mascota.'">
+          <h2 for="mascota" class="card-label" style="margin-left: 15px; color: #8a909d">'.$row->nombre.'
+          </h2>
+          </div>
+        </div>
+        <div class="card-body">
+          Especie: '.$row->especie.'<br> Raza: '.$row->raza.'<br> Tamaño: '.$row->tamano.'<br> Pelaje: '.$row->pelaje.'<br> Peso (kg): '.$row->peso.'<br> Estatura (m): '.$row->estatura.'<br>
+          </div>
+        </div>';
 			}
 		}else{
 			$info.='Este cliente no tiene mascotas registradas';
@@ -794,11 +801,19 @@ class Model extends CI_Model
 		if ($query->num_rows()>0){
 			foreach ($query->result() as $row) {
 				$info.='
-				<div class="form-check col-md-4">
-				<input type="checkbox" name="servicio[]"  value="'.$row->id_servicio.'">
-				<label for="servicios">'.$row->servicio.'</label>
-				<br>Descripción: '.$row->descripcion.'
-				</div>';
+				<div class="card card-custom gutter-b col-md-3 col-lg-2" style="    margin: 15px;">
+        <div class="card-header" style="background: #fff; border: none;     border: none;
+        padding-bottom: 0;">
+          <div class="card-title" style="display: flex;">
+          <input style="margin-top: 5px;" type="checkbox" name="servicio[]"  value="'.$row->id_servicio.'">
+          <h6 class="card-label" style="margin-left: 15px; color: #8a909d">'.$row->servicio.'</h6>
+          </div>
+        </div>
+        <div class="card-body" style="padding-top: 0;
+        padding-bottom: 15px;">
+        Descripción: '.$row->descripcion.'
+        </div>
+        </div>';
 			}
 		}else{
 			$info.='No se han registrado servicios, registre servicios o llame al administrador';
@@ -851,36 +866,39 @@ class Model extends CI_Model
 		if($query->num_rows()>0){
 			$tabla.='
 			<div class="table-responsive">
-			<table class="table table-hover ">
+			<table class="table table-hover tabla">
               <thead>
                 <tr>
-                  <th scope="col">Folio</th>
-                  <th scope="col">Especie</th>
-                  <th scope="col">Raza</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">#Servicios</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">Folio</th>
+                  <th class="titles-thead" scope="col">Especie</th>
+                  <th class="titles-thead" scope="col">Raza</th>
+                  <th class="titles-thead" scope="col">Nombre</th>
+                  <th class="titles-thead" scope="col">No. Servicios</th>
+                  <th class="titles-thead" scope="col">Total</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
             foreach ($query->result() as $row) {
             	$query = $this->db->query("SELECT COUNT(id_orden_trabajo) as servicios FROM orden_trabajo_servicios WHERE id_orden_trabajo = $row->id_orden_trabajo");
             	$id = $row->id_orden_trabajo;
-            	$tabla.=' <tr>
+            	$tabla.=' <tr class="first-column">
             	<td>'.$row->id_orden_trabajo.'</td>
             	<td>'.$row->especie.'</td>
             	<td>'.$row->raza.'</td>
             	<td>'.$row->nombre.'</td>
             	<td>'.$query->row('servicios').'</td>
             	<td>'.$row->total.'</td>
-            	<td>
-
-            		&nbsp;&nbsp;&nbsp;&nbsp;
-            		<a href="'.base_url().'welcome/editarOrden/'.$id.'" class="fas fa-2x fa-edit" title="Editar orden de servicio"></a>
-
-            		&nbsp;&nbsp;&nbsp;&nbsp;
-            		<a href="#" type="button" class="fas fa-2x fa-trash-alt" style="color: red;"   title="Cancelar reserva" onclick="deleteService('.$id.')"></a>
+              <td class="action-buttons">
+                <a href="'.base_url().'welcome/editarOrden/'.$id.'" data-toggle="modal" data-target="" onclick="" title="Editar orden de servicio">
+                <svg id="Layer_1" class="icon-action icon-editar" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path d="M19.607,18.746c0,0.881-0.716,1.624-1.597,1.624H5.231c-0.881,0-1.597-0.743-1.597-1.624V5.967  c0-0.881,0.716-1.571,1.597-1.571h7.454V3.332H5.231c-1.468,0-2.662,1.168-2.662,2.636v12.778c0,1.468,1.194,2.688,2.662,2.688  h12.778c1.468,0,2.662-1.221,2.662-2.688v-7.428h-1.065V18.746z"/>
+                <path d="M20.807,3.17c-0.804-0.805-2.207-0.805-3.012,0l-7.143,7.143c-0.068,0.068-0.117,0.154-0.14,0.247L9.76,13.571  c-0.045,0.181,0.008,0.373,0.14,0.506c0.101,0.101,0.237,0.156,0.376,0.156c0.043,0,0.086-0.005,0.129-0.016l3.012-0.753  c0.094-0.023,0.179-0.072,0.247-0.14l7.143-7.143c0.402-0.402,0.624-0.937,0.624-1.506S21.21,3.572,20.807,3.17z M13.016,12.467  l-2.008,0.502l0.502-2.008l5.909-5.909l1.506,1.506L13.016,12.467z M20.054,5.428l-0.376,0.376l-1.506-1.506l0.376-0.376  c0.402-0.402,1.104-0.402,1.506,0c0.201,0.201,0.312,0.468,0.312,0.753C20.366,4.96,20.255,5.227,20.054,5.428z"/></svg>
+              </a>
+              &nbsp;&nbsp;
+              <a href="#" data-toggle="modal" data-target="" onclick="deleteService('.$id.')" title="Cancelar reserva">
+                <svg height="35" class="icon-action" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z"/><path d="M0 0h48v48H0z" fill="none"/></svg>
+              </a>
             	</td>
             	<tr>';
             	}
@@ -902,7 +920,7 @@ class Model extends CI_Model
 			orden_trabajo ( id_mascota, id_empleado, id_estado, fecha_servicio, total, activo, comentarios)
 			VALUES ({$data['mascota']}, {$id_empleado}, 1, @now, {$data['total']}, 1, '{$data['comentarios']}' )");
 		$this->db->query("SET @last_id_rol = last_insert_id()");
-		foreach($data['servicio'] as $selected){	
+		foreach($data['servicio'] as $selected){
 			$this->db->query("INSERT INTO orden_trabajo_servicios (id_estado, id_orden_trabajo, id_servicio )
 			VALUES(99, @last_id_rol, {$selected})");
 		}
@@ -929,7 +947,7 @@ class Model extends CI_Model
 
 
 	function getOrders($id){
-		
+
 		$result='';
 		$estados = $query = $this->db->query("SELECT * FROM estados");
 		$query = $this->db->query("SELECT orden_trabajo_servicios.id_orden_trabajo, orden_trabajo_servicios.id_servicio, orden_trabajo_servicios.id_empleado, orden_trabajo_servicios.id_estado, orden_trabajo_servicios.hora_inicio, orden_trabajo_servicios.hora_fin, servicios.servicio, estados.estado FROM orden_trabajo_servicios INNER JOIN servicios ON orden_trabajo_servicios.id_servicio = servicios.id_servicio INNER JOIN estados ON orden_trabajo_servicios.id_estado = estados.id_estado WHERE id_orden_trabajo = {$id['id_orden']}");
@@ -973,7 +991,7 @@ class Model extends CI_Model
 		$query = $this->db->query("UPDATE orden_trabajo SET id_estado = 3 WHERE orden_trabajo.id_orden_trabajo= {$data['id_orden']}");
 		return $query;
 	}
-	
+
 	function getOrdenesTrabajoRealizadas($data){
 		$tabla ="";
 		date_default_timezone_set("America/Mexico_City");
@@ -1030,13 +1048,13 @@ class Model extends CI_Model
 	}
 
 	function ordenesDetalle($id){
-		
+
 		$result='';
 		$query = $this->db->query("SELECT orden_trabajo_servicios.id_orden_trabajo, orden_trabajo_servicios.id_servicio,orden_trabajo_servicios.id_empleado, orden_trabajo_servicios.id_estado, orden_trabajo_servicios.hora_inicio, orden_trabajo_servicios.hora_fin, servicios.servicio, estados.estado FROM orden_trabajo_servicios INNER JOIN servicios ON orden_trabajo_servicios.id_servicio = servicios.id_servicio INNER JOIN estados ON orden_trabajo_servicios.id_estado = estados.id_estado WHERE id_orden_trabajo = {$id['id_orden']}");
 		foreach ($query->result() as $row) {
 
 			$result.='<div>
-		  				<h5> '.$row->servicio.' estado: '.$row->estado.' incio: '.$row->hora_inicio.'  fin: '.$row->hora_fin.' </h5> 
+		  				<h5> '.$row->servicio.' estado: '.$row->estado.' incio: '.$row->hora_inicio.'  fin: '.$row->hora_fin.' </h5>
 		  			</div>';
 		}
 
