@@ -1114,7 +1114,7 @@ class Model extends CI_Model
 
 	function getItems(){
 		$query = $this->db->query("SELECT * FROM articulos WHERE activo=1 ORDER BY articulos.articulo ASC");
-		return $query; 
+		return $query;
 	}
 
 	function addItem($data){
@@ -1124,7 +1124,6 @@ class Model extends CI_Model
 	}
 
 	function sellItems($data){
-		
 		$id_articulo = $data['articulo'];
 		$cantidad = $data['cantidad'];
 		$total = 0;
@@ -1156,7 +1155,6 @@ class Model extends CI_Model
 			echo "<script type=\"text/javascript\">alert(\"Ha ocurrido un error no se ha podido hacer venta\");</script>";
 			return FALSE;
 		}
-		
 	}
 
 	function getVentasRealizadas($datos){
@@ -1165,14 +1163,14 @@ class Model extends CI_Model
 		if($query->num_rows()>0){
 			$tabla.='
 			<div class="table-responsive">
-			<table class="table table-hover ">
+			<table class="table table-hover tabla">
               <thead>
                 <tr>
-                  <th scope="col">#venta</th>
-                  <th scope="col">#empleado</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">#venta</th>
+                  <th class="titles-thead" scope="col">#empleado</th>
+                  <th class="titles-thead" scope="col">Fecha</th>
+                  <th class="titles-thead" scope="col">Total</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
@@ -1183,8 +1181,10 @@ class Model extends CI_Model
             	<td>'.$row->id_empleado.'</td>
             	<td>'.$row->fecha.'</td>
             	<td>'.$row->total.'</td>
-            	<td>
-            		<a href="#" class="fas fa-2x fa-trash-alt"  style title="Cancelar venta " onclick="cancelarVenta('.$id_venta.')"></a>
+              <td class="action-buttons">
+                <a href="#" data-toggle="modal" onclick="cancelarVenta('.$id_venta.')" title="Cancelar reserva">
+                  <svg height="35" class="icon-action" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z"/><path d="M0 0h48v48H0z" fill="none"/></svg>
+                </a>
             	</td>
             	<tr>';
             	}
@@ -1213,11 +1213,11 @@ class Model extends CI_Model
 			<table class="table table-hover ">
               <thead>
                 <tr>
-                  <th scope="col">#venta</th>
-                  <th scope="col">#empleado</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Estado</th>
+                  <th class="titles-thead" scope="col">#venta</th>
+                  <th class="titles-thead" scope="col">#empleado</th>
+                  <th class="titles-thead" scope="col">Fecha</th>
+                  <th class="titles-thead" scope="col">Total</th>
+                  <th class="titles-thead" scope="col">Estado</th>
                 </tr>
               </thead>
               <tbody>';
@@ -1228,7 +1228,7 @@ class Model extends CI_Model
             	<td>'.$row->id_empleado.'</td>
             	<td>'.$row->fecha.'</td>
             	<td>'.$row->total.'</td>
-            	<td>Cancelda</td>
+            	<td style="text-align: center;">Cancelda</td>
             	<tr>';
             	}
             $tabla.='</tbody>
