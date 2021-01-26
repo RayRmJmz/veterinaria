@@ -1107,5 +1107,135 @@ class Model extends CI_Model
 	/****************************************************************************************************/
 	/****************************************************************************************************/
 
+	function getItems(){
+		$query = $this->db->query("SELECT * FROM articulos WHERE activo=1 ORDER BY articulos.articulo ASC");
+		return $query; 
+	}
+
+	function addItem($data){
+		$query = $this->db->query("SELECT * FROM articulos WHERE id_articulo = {$data['id_item']}")->row();
+		$result = '{"articulo":"'.$query->articulo.'", "precio":'.$query->precio.', "marca":"'.$query->marca.'", "existencia":'.$query->existencia.'}';
+		return $result;
+	}
+
+	function sellItems($data){
+		
+		$id_articulo = $data['articulo'];
+		$cantidad = $data['cantidad'];
+		$total = 0;
+		$importe = 0;
+		$id_empleado = $this->session->userdata('id');
+		$this->db->trans_start();
+		$this->db->query("SET @now =  NOW()");
+		$this->db->query("INSERT INTO
+			ventas ( id_empleado, fecha, total)
+			VALUES ({$id_empleado}, @now, 0 )");
+		$this->db->query("SET @last_id_venta = last_insert_id()");
+		for($i=0; $i<sizeof($id_articulo); $i++){
+			$query = $this->db->query("SELECT * FROM articulos WHERE id_articulo = {$id_articulo[$i]}")->row();
+			$importe = $cantidad[$i] * $query->precio;
+			$this->db->query("INSERT INTO ventas_articulos (id_venta, id_articulo, cantidad, importe )
+			VALUES( @last_id_venta, {$id_articulo[$i]}, {$cantidad[$i]}, {$importe} )");
+			$total = $total + $importe;
+			$importe = 0;
+			$existencia = $query->existencia - $cantidad[$i];
+			$this->db->query("UPDATE articulos SET existencia = {$existencia} WHERE articulos.id_articulo = {$id_articulo[$i]}");
+		}
+
+		$this->db->query("UPDATE ventas SET total = {$total} WHERE ventas.id_venta = @last_id_venta");
+
+		if($this->db->trans_complete()){
+			echo "<script type=\"text/javascript\">alert(\"Venta completada total $".$total." \");</script>";
+			return TRUE;
+		}else{
+			echo "<script type=\"text/javascript\">alert(\"Ha ocurrido un error no se ha podido hacer venta\");</script>";
+			return FALSE;
+		}
+		
+	}
+
+	function getVentasRealizadas($datos){
+		$tabla = '';
+		$query = $this->db->query("SELECT * FROM ventas WHERE activo = 1 AND  DATE(ventas.fecha) BETWEEN '{$datos['inicial']}' AND '{$datos['final']}'");
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col">#venta</th>
+                  <th scope="col">#empleado</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>';
+            foreach ($query->result() as $row) {
+            	$id_venta = $row->id_venta;
+            	$tabla.=' <tr>
+            	<td>'.$row->id_venta.'</td>
+            	<td>'.$row->id_empleado.'</td>
+            	<td>'.$row->fecha.'</td>
+            	<td>'.$row->total.'</td>
+            	<td>
+            		<a href="#" class="fas fa-2x fa-trash-alt"  style title="Cancelar venta " onclick="cancelarVenta('.$id_venta.')"></a>
+            	</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+		}else{
+			$tabla=' <p">No se han encontrado ventas en este rango de fechas  </p>' ;
+		}
+		return $tabla;
+
+	}
+
+	function cancelarVenta($data){
+		$query = $this->db->query("UPDATE ventas SET activo = '0' WHERE ventas.id_venta = {$data['id_venta']}");
+		return $query ;
+	}
+
+	function getVentasCanceladas($datos){
+		$tabla = '';
+		$query = $this->db->query("SELECT * FROM ventas WHERE activo = 0 AND  DATE(ventas.fecha) BETWEEN '{$datos['inicial']}' AND '{$datos['final']}'");
+		if($query->num_rows()>0){
+			$tabla.='
+			<div class="table-responsive">
+			<table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col">#venta</th>
+                  <th scope="col">#empleado</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Estado</th>
+                </tr>
+              </thead>
+              <tbody>';
+            foreach ($query->result() as $row) {
+            	$id_venta = $row->id_venta;
+            	$tabla.=' <tr>
+            	<td>'.$row->id_venta.'</td>
+            	<td>'.$row->id_empleado.'</td>
+            	<td>'.$row->fecha.'</td>
+            	<td>'.$row->total.'</td>
+            	<td>Cancelda</td>
+            	<tr>';
+            	}
+            $tabla.='</tbody>
+                    </table>
+                    </div>';
+
+		}else{
+			$tabla=' <p">No se han encontrado ventas en este rango de fechas  </p>' ;
+		}
+		return $tabla;
+
+	}
+
 
 }

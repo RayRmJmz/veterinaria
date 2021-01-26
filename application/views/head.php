@@ -99,9 +99,17 @@
                   <a class="dropdown-item" href="<?=base_url()?>welcome/ordenesRealizadas">Ver realizadas</a>
                 </div>
               </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?=base_url()?>welcome/ventas">Punto de venta</a>
-            </li>
+              <li class="btn-group dropdown">
+                <a class="nav-link dropdown-toggle admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Ventas
+                </a>
+                <div class="dropdown-menu">
+                  <!-- Dropdown menu links -->
+                  <a class="dropdown-item" href="<?=base_url()?>welcome/ventas">Nueva venta</a>
+                  <a class="dropdown-item" href="<?=base_url()?>welcome/ventasRealizadas">Ventas realizadas</a>
+                  <a class="dropdown-item" href="<?=base_url()?>welcome/ventasCanceladas">Ventas canceladas</a>
+                </div>
+              </li> 
             <?php if ($rol == 1) { ?>
               <li class="btn-group dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

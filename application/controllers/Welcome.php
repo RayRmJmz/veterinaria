@@ -484,11 +484,50 @@ class Welcome extends CI_Controller {
 	function ventas(){
 		$this->valida_session();
 		$this->loadnav();
-		$this->load->view('puntoVenta');
+		$data['items'] = $this->Model->getItems();
+		$this->load->view('puntoVenta', $data);
 		$this->load->view('footer');
 	}
 
 
+	function addItem(){
+		$result = $this->Model->addItem($_POST);
+		echo json_encode($result);
+	}
+
+	function sellItems(){
+		$result = $this->Model->sellItems($_POST);
+		$this->ventas();
+	}
+
+	function ventasRealizadas(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('ventasRealizadas');
+		$this->load->view('footer');
+	}
+
+	function ventasCanceladas(){
+		$this->valida_session();
+		$this->loadnav();
+		$this->load->view('ventasCanceladas');
+		$this->load->view('footer');
+	}
+
+	function getVentasRealizadas(){
+		$result = $this->Model->getVentasRealizadas($_POST);
+		echo $result;
+	}
+
+	function cancelarVenta(){
+		$result = $this->Model->cancelarVenta($_POST);
+		echo $result;
+	}
+
+	function getVentasCanceladas(){
+		$result = $this->Model->getVentasCanceladas($_POST);
+		echo $result;
+	}
 
 	function test(){
 		$estado = $this->db->query("SELECT * FROM orden_trabajo_servicios WHERE orden_trabajo_servicios.id_orden_trabajo = 20 AND orden_trabajo_servicios.id_servicio = 2")->row();
