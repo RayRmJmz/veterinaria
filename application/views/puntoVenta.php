@@ -6,12 +6,10 @@
 	<div class="content">
 		<div class="card card-container" style="overflow-y: auto;">
 		  <div class="card-header card-search">
-        <h2>Punto de venta</h2><br>
-        <div class="row container-search">
-          <!-- <div class="search">
-            <select class="selectItem"  style="width: 100%" ></select>
-          </div> -->
-
+      <div class="" style="text-align: center;" >
+		  		<h2 style="margin-bottom: 25px">Punto de Venta</h2>
+		  	</div>
+        <div class="row container-search" style="align-items: center;">
           <div class="search">
             <select class="js-example-basic-single" name="articulo" id="articulo" style="width: 100%">
               <option value="0">Buscar artículo</option>
@@ -20,18 +18,16 @@
                 if($row->existencia < 1){
                   echo '<option value="'.$row->id_articulo.'" disabled style="color:red;">'.$row->articulo.' existencia: sin existencias '.'</option>' ;
                 }else{
-                  echo '<option value="'.$row->id_articulo.'">'.$row->articulo. ' existencia: '. $row->existencia.'</option>'; 
+                  echo '<option value="'.$row->id_articulo.'">'.$row->articulo. ' existencia: '. $row->existencia.'</option>';
                 }
-
               }  ?>
             </select>
 
           </div>
 
-          <div >
-            <a  type="button" class="btn btn-primary" onclick="addItem()">Agregar articulo</a>
+          <div class="btn-add_empleado" style="color: #fff;">
+            <a  type="button" class="btn btn-danger" onclick="addItem()">Agregar articulo</a>
           </div>
-
         </div>
 		  </div>
 		  <div class="card-body">
@@ -39,22 +35,25 @@
 
         <form method="post" action="<?=base_url()?>welcome/sellItems">
           <div class="input-group col-lg-12">
-            <table class="table table-bordered table-hover" id="tablaProductos">  
+            <table class="table table-bordered table-hover tabla" id="tablaProductos">
               <thead>
-                <tr> 
-                  <th>Folio</th>
-                  <th>Producto</th>
-                  <th>Existencia</th>
-                  <th>Precio</th>
-                  <th>Cantidad</th>
+                <tr>
+                  <th class="titles-thead" scope="col">Folio</th>
+                  <th class="titles-thead" scope="col">Producto</th>
+                  <th class="titles-thead" scope="col">Existencia</th>
+                  <th class="titles-thead" scope="col">Precio</th>
+                  <th class="titles-thead" scope="col">Cantidad</th>
                 </tr>
               </thead>
               <tbody>
-               
+
               </tbody>
             </table>
 
-            <button type="submit" class="btn btn-primary mb-2">Aceptar</button>
+
+            <div style="text-align: right;">
+              <button type="submit" class="btn btn-primary mb-2">Aceptar</button>
+            </div>
           </div>
         </form>
 

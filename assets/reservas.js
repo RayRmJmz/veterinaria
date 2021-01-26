@@ -4,10 +4,10 @@ function obtener_reservas(fecha ){
 	if (fecha == null) {
 		fecha = new Date().getFullYear()+'-'+("0"+(new Date().getMonth()+1)).slice(-2)+'-'+("0"+new Date().getDate()).slice(-2);
 	}else{
-		
+
 		console.log(fecha);
 	}
-	
+
 	$.ajax({
 		url:globalURL+'getReservas',
 		type: 'POST',
@@ -15,7 +15,7 @@ function obtener_reservas(fecha ){
 		data :{fecha: fecha},
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
 
@@ -41,13 +41,23 @@ function deleteReserva(id){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("Reserva cancelada correctamente");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Reserva cancelada satisfactoriamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_reservas();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("No se ha podido cancelar reserva");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido cancelar la reserva',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }
@@ -61,13 +71,23 @@ function sendReservationToOrder(id){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("Reserva enviada a orden de servicio correctamente");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Reserva enviada a orden de servicio correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_reservas();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("No se ha podido enviar a orden de servicio");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'La reserva no se ha podido enviar a orden de servicio',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }

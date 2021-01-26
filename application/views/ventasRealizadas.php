@@ -6,20 +6,22 @@
 	<div class="content">
 		<div class="card card-container" style="overflow-y: auto;">
 		  <div class="card-header card-search">
-        <h2>Ventas realizadas</h2><br>
+      <div class="" style="text-align: center;" >
+		  		<h2 style="margin-bottom: 25px">Ventas realizadas</h2>
+		  	</div>
         <div class="row container-search">
           <div class="col-4">
-            <label>Fecha inicial</label>
+            <label style="margin-right: 10px;">Fecha inicial</label>
             <input type="date" name="inicial" id="inicial">
           </div>
           <div class="col-4">
-            <label>Fecha final</label>
+            <label style="margin-right: 10px;">Fecha final</label>
             <input type="date" name="final" id="final">
           </div>
           <div class="col-4">
             <button type="button" class="btn btn-primary" onclick="ventasRealizadas()">Buscar</button>
           </div>
-          
+
 
         </div>
 		  </div>

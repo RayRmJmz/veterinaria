@@ -21,9 +21,9 @@ function update(id_orden, id_servicio){
 	console.log("Orden: "+ id_orden + "  servicio "+id_servicio);
 	var e = document.getElementById("servicio"+id_servicio);
 	var estado = e.options[e.selectedIndex].value;
-	console.log("value " + estado); 
+	console.log("value " + estado);
 	console.log("actualizado");
-	
+
 
 	$.ajax({
 		url:globalURL+'updateOrdenServicio',
@@ -51,7 +51,12 @@ function successOrden(){
 		data :{id_orden: id_orden },
 	})
 	.done(function(resultado){
-		window.alert("Orden de trabajo termiando");
+    Swal.fire({
+      title: '',
+      text: 'Orden de trabajo finalizada',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
 		location.href = globalURL+'ordenesActivas';
 
 	})

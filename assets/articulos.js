@@ -9,7 +9,7 @@ function obtener_articulos(cadena){
 		data :{cadena: cadena },
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
 
@@ -83,7 +83,7 @@ function removeArticulos(datos){
 	//console.log("editar empleado");
 	d=datos.split('||');
 	$('#remove_id_articulo').val(d[0]);
-	$('#remove_articulo').val(d[1]);	
+	$('#remove_articulo').val(d[1]);
 	$('#remove_marca').val(d[2]);
 	$('#remove_precio').val(d[3]);
 	$('#remove_existencia').val(d[4]);
@@ -106,13 +106,23 @@ function removeArticulos(datos){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("DATOS DEL ARTICULO ACTUALIZADO");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Datos del artículo actualizados',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_articulos();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("ARTICULO NO SE PUDO ACTUALIZAAR");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'El artículo no se ha podido actualizar',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }
@@ -129,13 +139,23 @@ function removeArticulo(){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("ARTICULO DADO DE BAJA SATISFATORIAMENTE");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Artículo dado de baja satisfactoriamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_articulos();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("ARTICULO NO SE PUDO DAR DE BAJA");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'El artículo no se ha podido actualizar',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }

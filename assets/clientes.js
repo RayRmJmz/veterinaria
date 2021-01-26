@@ -9,7 +9,7 @@ function obtener_clientes(cadena){
 		data :{cadena: cadena },
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
 
@@ -38,7 +38,7 @@ function verificaCliente(cadena){
 			$("#message").html(res);
 		},
 		error:function(error){
-			
+
 		}
 	});
 }
@@ -119,13 +119,23 @@ function updateCliente(){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("Datos cliente actualizados satisfactoriamente");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Datos de cliente actualizados satasfactoriamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_clientes();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("No se ha podido actualizar cliente");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'El cliente no se ha podido actualizar',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }
