@@ -4,7 +4,7 @@
 <div class="content-wrapper">
 	<div class="content">
 		<div class="card">
-		  <div class="card-header" style="background: #fff;">
+		  <div class="card-header" style="background: #fff; margin: 15px 0;">
 		  	<div class="" style="text-align: center;" >
 		  		<h2>Editar - Actualizar orden de trabajo</h2>
 		  	</div>
@@ -70,19 +70,17 @@
 
 		  	<div style="margin-bottom: 20px;">
 		  		<h4 style="margin-bottom: 20px;">Servicios</h4>
-		  		<section id="resultado" style="display: flex;">
-
-		  		</section>
+		  		<section id="resultado" style="display: flex;"></section>
 		  	</div>
-          <div class="card-footer" style="background: #fff; margin-top: 15px;">
-            <div class="row" style="margin-top: 15px;">
-              <div class="col-lg-4"></div>
-              <div class="col-lg-8">
-                <a  type="button" onclick="successOrden()" class="btn btn-success" style="color: #fff;">Terminar servicio</a>
-		  		      <a href="<?=base_url()?>welcome/ordenesActivas" type="button" class="btn btn-secondary">Regresar</a>
-              </div>
+        <div class="card-footer" style="background: #fff; margin-top: 15px;">
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-8">
+              <a  type="button" onclick="successOrden()" class="btn btn-success" style="color: #fff;">Terminar servicio</a>
+              <a href="<?=base_url()?>welcome/ordenesActivas" type="button" class="btn btn-secondary">Regresar</a>
             </div>
           </div>
+        </div>
 		  </div>
 		</div>
 	</div>

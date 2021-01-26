@@ -1041,33 +1041,32 @@ class Model extends CI_Model
 		if($query->num_rows()>0){
 			$tabla.='
 			<div class="table-responsive">
-			<table class="table table-hover ">
+			<table class="table table-hover tabla">
               <thead>
                 <tr>
-                  <th scope="col">Folio</th>
-                  <th scope="col">Especie</th>
-                  <th scope="col">Raza</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">#Servicios</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Acciones</th>
+                  <th class="titles-thead" scope="col">Folio</th>
+                  <th class="titles-thead" scope="col">Especie</th>
+                  <th class="titles-thead" scope="col">Raza</th>
+                  <th class="titles-thead" scope="col">Nombre</th>
+                  <th class="titles-thead" scope="col">#Servicios</th>
+                  <th class="titles-thead" scope="col">Total</th>
+                  <th class="titles-thead" scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>';
             foreach ($query->result() as $row) {
             	$query = $this->db->query("SELECT COUNT(id_orden_trabajo) as servicios FROM orden_trabajo_servicios WHERE id_orden_trabajo = $row->id_orden_trabajo");
             	$id = $row->id_orden_trabajo;
-            	$tabla.=' <tr>
+            	$tabla.=' <tr class="first-column">
             	<td>'.$row->id_orden_trabajo.'</td>
             	<td>'.$row->especie.'</td>
             	<td>'.$row->raza.'</td>
             	<td>'.$row->nombre.'</td>
             	<td>'.$query->row('servicios').'</td>
             	<td>'.$row->total.'</td>
-            	<td>
-
+            	<td class="action-buttons">
             		&nbsp;&nbsp;&nbsp;&nbsp;
-            		<a href="'.base_url().'welcome/detalleOrden/'.$id.'" class="fas fa-2x fa-eye" title="Ver detalle orden de trabajo"></a>
+            		<a href="'.base_url().'welcome/detalleOrden/'.$id.'" class="fas fa-2x fa-eye" style="color: black;" title="Ver detalle orden de trabajo"></a>
             	</td>
             	<tr>';
             	}
@@ -1093,8 +1092,14 @@ class Model extends CI_Model
 		$query = $this->db->query("SELECT orden_trabajo_servicios.id_orden_trabajo, orden_trabajo_servicios.id_servicio,orden_trabajo_servicios.id_empleado, orden_trabajo_servicios.id_estado, orden_trabajo_servicios.hora_inicio, orden_trabajo_servicios.hora_fin, servicios.servicio, estados.estado FROM orden_trabajo_servicios INNER JOIN servicios ON orden_trabajo_servicios.id_servicio = servicios.id_servicio INNER JOIN estados ON orden_trabajo_servicios.id_estado = estados.id_estado WHERE id_orden_trabajo = {$id['id_orden']}");
 		foreach ($query->result() as $row) {
 
-			$result.='<div>
-		  				<h5> '.$row->servicio.' estado: '.$row->estado.' incio: '.$row->hora_inicio.'  fin: '.$row->hora_fin.' </h5>
+      $result.='<div class="card card-custom gutter-b col-md-3 col-lg-2" style="margin: 15px;box-shadow: 0 0 30px 0 rgba(82,63,105,.05);">
+                  <div class="card-header" style="background: #fff;
+                  padding-bottom: 0; display: flex; justify-content: center;">
+                    <label for="servicio" style="font-size: 1rem; color: #000; font-weight: 500; margin-bottom: 15px;"> '.$row->servicio.'</label>
+                  </div>
+                  <p style="color: #000; font-weight: 300; margin: 25px 0;">Estado: <span style="color: #29cc97; font-weight: 500;">'.$row->estado.'</span></p>
+                  <p style="color: #000; font-weight: 300; margin: 25px 0;">Inicio: <span style="; font-weight: 400;">'.$row->hora_inicio.'</span></p>
+                  <p style="color: #000; font-weight: 300; margin: 25px 0;">Fin: <span style="; font-weight: 400;">'.$row->hora_fin.'</span></p>
 		  			</div>';
 		}
 
