@@ -1,1 +1,1 @@
-var globalURL='http://localhost/veterinaria/welcome/';
+var globalURL='http://localhost:82/jaimepets/welcome/';
