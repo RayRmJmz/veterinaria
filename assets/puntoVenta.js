@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 
 function addItem(){
-	
+
 	var e = document.getElementById("articulo");
 	var id_item = e.value;
 	if(id_item == 0 ){
@@ -21,7 +21,7 @@ function addItem(){
 			var json = JSON.parse(resultado);
 			console.log(json["articulo"]);
 			document.getElementById("tablaProductos").insertRow(-1).innerHTML =  '<td>'+id_item+'<input type="number" name="articulo[]" value="'+id_item+'" hidden></td><td>'+json["articulo"]+'</td> <td>'+json["existencia"]+'</td><td>'+json["precio"]+'</td><td><input type="number" name="cantidad[]" value="1"></td>';
-			
+
 		})
 
 	}
@@ -43,8 +43,13 @@ function ventasRealizadas(){
 			$("#resultado").html(res);
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("Ha ocurrido un erro de consulta");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Ha ocurrido un error de consulta',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }
@@ -57,7 +62,12 @@ function cancelarVenta(id_venta){
 		data :{id_venta: id_venta },
 	})
 	.done(function(resultado){
-		window.alert("Venta cancelada satisfactoriamente");	
+    Swal.fire({
+      title: '',
+      text: 'Venta cancelada satisfactoriamente',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
 		ventasRealizadas();
 	})
 }
@@ -78,8 +88,13 @@ function ventasCanceladas(){
 			$("#resultado").html(res);
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("Ha ocurrido un erro de consulta");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Ha ocurrido un error de consulta',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }

@@ -170,13 +170,23 @@ function addPet(){
 			//dataType: 'json',
 			success:function(res){
 				// $("#resultado").html(res);
-				console.log(res);
-				window.alert("Mascota agregada satisfactoriamente");
+        console.log(res);
+        Swal.fire({
+          title: '',
+          text: 'Mascota agregada satisfactoriamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
 				obtener_mascotas();
 			},
 			error:function(error){
-				//console.error(error);
-				console.alert("Ha ocurrido un error: No se ha podido agregar mascota");
+        //console.error(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'No se ha podido agregar la mascota',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
 			}
 		});
     	$('#addPet').modal('hide')
@@ -201,13 +211,23 @@ function editPet(){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("Mascota actualizada satisfactoriamente");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Mascota actualizada satisfactoriamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_mascotas();
 		},
 		error:function(error){
-			//console.error(error);
-			console.alert("Ha ocurrido un error: No se ha podido actualizar mascota");
+      //console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido actualizar la mascota',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 

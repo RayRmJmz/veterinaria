@@ -9,7 +9,7 @@ function obtener_servicios(cadena){
 		data :{cadena: cadena },
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
 
@@ -83,7 +83,7 @@ function removeServicios(datos){
 	//console.log("editar empleado");
 	d=datos.split('||');
 	$('#remove_id_servicio').val(d[0]);
-	$('#remove_servicio').val(d[1]);	
+	$('#remove_servicio').val(d[1]);
 	$('#remove_descripcion').val(d[2]);
 }
  /*****************************************************/
@@ -101,13 +101,23 @@ function removeServicios(datos){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("DATOS DEL SERVICIO ACTUALIZADO");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Datos del servicio actualizados',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_servicios();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("SERVICIO NO SE PUDO ACTUALIZAAR");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido actualizar',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }
@@ -124,13 +134,23 @@ function removeServicio(){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("SERVICIO DADO DE BAJA SATISFATORIAMENTE");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'servicio dado de baja satisfactoriamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_servicios();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("SERVICIO NO SE PUDO DAR DE BAJA");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido dar de baja el servicio',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }

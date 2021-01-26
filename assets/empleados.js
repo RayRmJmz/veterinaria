@@ -9,7 +9,7 @@ function obtener_empleados(cadena){
 		data :{cadena: cadena },
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
 
@@ -57,7 +57,7 @@ function empleados(datos){
 	$('#id_empleado').val(d[0]);
 	$('#usuario').val(d[1]);
 	$('#nombre').val(d[2]);
-	$('#apellido1').val(d[3]);	
+	$('#apellido1').val(d[3]);
 	$('#apellido2').val(d[4]);
 	$('#celular').val(d[5]);
 	$('#fecha_alta').val(d[6]);
@@ -77,7 +77,7 @@ function removeEmpleados(datos){
 	$('#remove_id_empleado').val(d[0]);
 	$('#remove_usuario').val(d[1]);
 	$('#remove_nombre').val(d[2]);
-	$('#remove_apellido1').val(d[3]);	
+	$('#remove_apellido1').val(d[3]);
 	$('#remove_apellido2').val(d[4]);
 	$('#remove_celular').val(d[5]);
 	$('#remove_fecha_alta').val(d[6]);
@@ -93,12 +93,12 @@ function validateForm(){
 		alert("USUARIO YA EXISTE, INGRESE OTRO USUARIO");
 		return false;
 	}
-	
+
     if (document.forms["empleadosForm"]["usuario"].value == "") {
     alert("INGRESE USUARIO");
     return false;
     }
-   
+
     if (document.forms["empleadosForm"]["password"].value == "") {
     alert("INGRESE CONTRASEÑA");
     return false;
@@ -142,7 +142,7 @@ function validateForm(){
     alert("SELECCIONE PUESTO");
     return false;
     }
- 
+
 }
 
 // Valida contraseña sea iguales
@@ -157,7 +157,7 @@ $(document).on('keyup','#password2',function(){
 			return false;
 		}
 	}
-	
+
 });
 
 $(document).on('keyup','#password',function(){
@@ -215,13 +215,23 @@ function updateEmpleado(){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("DATOS USUARIO ACTUALIZADO");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Datos de usuario actualizados',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_empleados();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("EMPLEADO NO SE PUDO ACTUALIZAAR");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido actualizar',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
 		}
 	});
 }
@@ -240,12 +250,22 @@ function updatePassEmpleado(){
 		success:function(res){
 			// $("#resultado").html(res);
 			console.log(res);
-			window.alert("CONTRASEÑA ACTUALIZADA SATISFATORIAMENTE");
+			Swal.fire({
+        title: '',
+        text: 'Contraseña actualizada satisfactoriamete',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }),
 			obtener_empleados();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("NO SE HA PODIDO ACTUALIZAR CONTRASEÑA");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido actualizar la contraseña',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
 		}
 	});
 }
@@ -262,13 +282,23 @@ function removeEmpleado(){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("EMPLEADO DADO DE BAJA SATISFATORIAMENTE");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Empleado dado de baja satisfactoriamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }),
 			obtener_empleados();
 		},
 		error:function(error){
 			console.error(error);
-			console.alert("EMPLEADO NO SE PUDO DAR DE BAJA");
+			Swal.fire({
+        title: 'Error!',
+        text: 'El empleado no se pudo dar de baja',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
 		}
 	});
 }

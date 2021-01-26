@@ -8,7 +8,7 @@ function obtener_ordenes(cadena){
 		data :{cadena: cadena },
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
 
@@ -35,13 +35,23 @@ function deleteService(id){
 		//dataType: 'json',
 		success:function(res){
 			// $("#resultado").html(res);
-			console.log(res);
-			window.alert("Orden  cancelada correctamente");
+      console.log(res);
+      Swal.fire({
+        title: '',
+        text: 'Orden cancelada correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
 			obtener_ordenes();
 		},
 		error:function(error){
-			console.error(error);
-			console.alert("No se ha podido cancelar orden");
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido cancelar la orden',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });;
 		}
 	});
 }
@@ -55,6 +65,6 @@ function updateOrden(id){
 		data :{id: id },
 	})
 	.done(function(resultado){
-		$("#resultado").html(resultado);	
+		$("#resultado").html(resultado);
 	})
 }
